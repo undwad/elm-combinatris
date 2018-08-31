@@ -237,7 +237,7 @@ showIntro =
       [ "background"  => "rgba(236, 240, 241, 0.85)"
       , "color"       => "#34495f"
       , "font-family" => "Helvetica, Arial, sans-serif"
-      , "font-size"   => "5vh"
+      , "font-size"   => "4vh"
       , "font-weight" => "300"
       , "position"    => "fixed"
       , "left"        => "50%"
@@ -246,18 +246,20 @@ showIntro =
       , "height"      => "55%"
       , "transform"   => "translate(-50%, -50%)"
       , "margin"      => "0 auto"
+      , "text-align"  => "center"
       ]
     ]
     [ Markdown.toHtml [] """
-elm-flatris is a [**Flatris**](https://github.com/skidding/flatris)
+This game is a [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html)
 clone coded in [**Elm**](http://elm-lang.org/) language.
 
-Inspired by the classic [**Tetris**](http://en.wikipedia.org/wiki/Tetris)
-game, the game can be played with a keyboard using the arrow keys,
-and on mobile devices using the buttons below.
+Unlike the original game, expressions don't reduce completely at once,
+but step by step, so that you could stop infinite loops.
+Scoring also is slightly different but intuitive.
 
-elm-flatris is open source on
-[**GitHub**](https://github.com/w0rm/elm-flatris).
+Use arrow keys or screen buttons to play the game.
+
+The game is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).
 """
     ]
 
