@@ -230,26 +230,89 @@ showControls =
     ]
   ]
 
+showRule : Term -> Html Msg
+showRule term =
+  let
+    rule =
+     case term of
+        I ->
+          [ coloredText "#3993d0" "            " ] ++
+          (showTerm "span" I) ++
+          [ coloredText "#3993d0" "x"
+          , coloredText "#bdc3c7" " = "
+          , coloredText "#3993d0" "x"
+          ]
+        K ->
+          [ coloredText "#3993d0" "         " ] ++
+          (showTerm "span" K) ++
+          [ coloredText "#3993d0" "xy"
+          , coloredText "#bdc3c7" " = "
+          , coloredText "#3993d0" "x" ]
+        S ->
+          (showTerm "span" S) ++
+          [ coloredText "#3993d0" "xyz"
+          , coloredText "#bdc3c7" " = "
+          , coloredText "#3993d0" "xz"
+          , coloredText "#34495f" "("
+          , coloredText "#3993d0" "yz"
+          , coloredText "#34495f" ")"
+          ]
+        Y ->
+          [ coloredText "#3993d0" "     " ] ++
+          (showTerm "span" Y) ++
+          [ coloredText "#3993d0" "x"
+          , coloredText "#bdc3c7" " = "
+          , coloredText "#3993d0" "x"
+          , coloredText "#34495f" "("
+          ] ++
+          (showTerm "span" Y) ++
+          [ coloredText "#3993d0" "x"
+          , coloredText "#34495f" ")"
+          ]
+        _ -> [ ]
+  in
+    horzDiv rule
+
+showRules : Html Msg
+showRules =
+  div
+  [ style
+    [ "margin"      => "0 auto 0"
+    , "position"    => "fixed"
+    , "right"       => "10px"
+    , "bottom"      => "10px"
+    , "font-family" => "Helvetica, Arial, sans-serif"
+    , "font-size"   => "4vh"
+    , "font-weight" => "300"
+    , "white-space" => "pre"
+    , "display"     => "block"
+    ]
+  ]
+  [ showRule I
+  , showRule K
+  , showRule S
+  , showRule Y
+  ]
+
 showIntro : Html Msg
 showIntro =
   div
-    [ style
-      [ "background"  => "rgba(236, 240, 241, 0.85)"
-      , "color"       => "#34495f"
-      , "font-family" => "Helvetica, Arial, sans-serif"
-      , "font-size"   => "4vh"
-      , "font-weight" => "300"
-      , "position"    => "fixed"
-      , "left"        => "50%"
-      , "top"         => "45%"
-      , "width"       => "90%"
-      , "height"      => "55%"
-      , "transform"   => "translate(-50%, -50%)"
-      , "margin"      => "0 auto"
-      , "text-align"  => "center"
-      ]
+  [ style
+    [ "color"       => "#34495f"
+    , "font-family" => "Helvetica, Arial, sans-serif"
+    , "font-size"   => "4vh"
+    , "font-weight" => "300"
+    , "position"    => "fixed"
+    , "left"        => "50%"
+    , "top"         => "45%"
+    , "width"       => "90%"
+    , "height"      => "55%"
+    , "transform"   => "translate(-50%, -50%)"
+    , "margin"      => "0 auto"
+    , "text-align"  => "center"
     ]
-    [ Markdown.toHtml [] """
+  ]
+  [ Markdown.toHtml [] """
 This game is a [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html)
 clone coded in [**Elm**](http://elm-lang.org/) language.
 
@@ -261,7 +324,7 @@ Use arrow keys or screen buttons to play the game.
 
 The game is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).
 """
-    ]
+  ]
 
 showOrientationHint : Html Msg
 showOrientationHint =
@@ -294,7 +357,7 @@ view model =
     , if Loaded == model.state then showIntro else showTable model
     , if Loaded /= model.state then showInfo model.next model.score else div [] []
     , showGameButton model.state
-    , if Playing == model.state then showControls else div [] []
+    , if Playing == model.state then showControls else showRules
     ]
   else
     showOrientationHint

@@ -10393,6 +10393,135 @@ var _user$project$View$horzDiv = function (children) {
 		},
 		children);
 };
+var _user$project$View$showRule = function (term) {
+	var rule = function () {
+		var _p7 = term;
+		switch (_p7.ctor) {
+			case 'I':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$coloredText, '#3993d0', '            '),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_user$project$View$showTerm, 'span', _user$project$Expr$I),
+						{
+							ctor: '::',
+							_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$View$coloredText, '#bdc3c7', ' = '),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}));
+			case 'K':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$coloredText, '#3993d0', '         '),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_user$project$View$showTerm, 'span', _user$project$Expr$K),
+						{
+							ctor: '::',
+							_0: A2(_user$project$View$coloredText, '#3993d0', 'xy'),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$View$coloredText, '#bdc3c7', ' = '),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}));
+			case 'S':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					A2(_user$project$View$showTerm, 'span', _user$project$Expr$S),
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$coloredText, '#3993d0', 'xyz'),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$View$coloredText, '#bdc3c7', ' = '),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$View$coloredText, '#3993d0', 'xz'),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View$coloredText, '#34495f', '('),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$View$coloredText, '#3993d0', 'yz'),
+										_1: {
+											ctor: '::',
+											_0: A2(_user$project$View$coloredText, '#34495f', ')'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					});
+			case 'Y':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: A2(_user$project$View$coloredText, '#3993d0', '     '),
+						_1: {ctor: '[]'}
+					},
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						A2(_user$project$View$showTerm, 'span', _user$project$Expr$Y),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							{
+								ctor: '::',
+								_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View$coloredText, '#bdc3c7', ' = '),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+										_1: {
+											ctor: '::',
+											_0: A2(_user$project$View$coloredText, '#34495f', '('),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							},
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								A2(_user$project$View$showTerm, 'span', _user$project$Expr$Y),
+								{
+									ctor: '::',
+									_0: A2(_user$project$View$coloredText, '#3993d0', 'x'),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$View$coloredText, '#34495f', ')'),
+										_1: {ctor: '[]'}
+									}
+								}))));
+			default:
+				return {ctor: '[]'};
+		}
+	}();
+	return _user$project$View$horzDiv(rule);
+};
 var _user$project$View$showInfo = F2(
 	function (next, score) {
 		return A2(
@@ -10471,9 +10600,9 @@ var _user$project$View$showInfo = F2(
 			});
 	});
 var _user$project$View$showGameButton = function (state) {
-	var _p7 = function () {
-		var _p8 = state;
-		switch (_p8.ctor) {
+	var _p8 = function () {
+		var _p9 = state;
+		switch (_p9.ctor) {
 			case 'Loaded':
 				return {ctor: '_Tuple2', _0: 'Start', _1: _user$project$Common$Start};
 			case 'Finished':
@@ -10484,8 +10613,8 @@ var _user$project$View$showGameButton = function (state) {
 				return {ctor: '_Tuple2', _0: 'Resume', _1: _user$project$Common$Resume};
 		}
 	}();
-	var txt = _p7._0;
-	var msg = _p7._1;
+	var txt = _p8._0;
+	var msg = _p8._1;
 	return A2(
 		_elm_lang$html$Html$button,
 		{
@@ -10749,6 +10878,67 @@ var _user$project$View$showControls = A2(
 			_1: {ctor: '[]'}
 		}
 	});
+var _user$project$View$showRules = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: A2(_user$project$View_ops['=>'], 'margin', '0 auto 0'),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$View_ops['=>'], 'position', 'fixed'),
+					_1: {
+						ctor: '::',
+						_0: A2(_user$project$View_ops['=>'], 'right', '10px'),
+						_1: {
+							ctor: '::',
+							_0: A2(_user$project$View_ops['=>'], 'bottom', '10px'),
+							_1: {
+								ctor: '::',
+								_0: A2(_user$project$View_ops['=>'], 'font-family', 'Helvetica, Arial, sans-serif'),
+								_1: {
+									ctor: '::',
+									_0: A2(_user$project$View_ops['=>'], 'font-size', '4vh'),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$View_ops['=>'], 'font-weight', '300'),
+										_1: {
+											ctor: '::',
+											_0: A2(_user$project$View_ops['=>'], 'white-space', 'pre'),
+											_1: {
+												ctor: '::',
+												_0: A2(_user$project$View_ops['=>'], 'display', 'block'),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: _user$project$View$showRule(_user$project$Expr$I),
+		_1: {
+			ctor: '::',
+			_0: _user$project$View$showRule(_user$project$Expr$K),
+			_1: {
+				ctor: '::',
+				_0: _user$project$View$showRule(_user$project$Expr$S),
+				_1: {
+					ctor: '::',
+					_0: _user$project$View$showRule(_user$project$Expr$Y),
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	});
 var _user$project$View$showIntro = A2(
 	_elm_lang$html$Html$div,
 	{
@@ -10756,40 +10946,40 @@ var _user$project$View$showIntro = A2(
 		_0: _elm_lang$html$Html_Attributes$style(
 			{
 				ctor: '::',
-				_0: A2(_user$project$View_ops['=>'], 'background', 'rgba(236, 240, 241, 0.85)'),
+				_0: A2(_user$project$View_ops['=>'], 'color', '#34495f'),
 				_1: {
 					ctor: '::',
-					_0: A2(_user$project$View_ops['=>'], 'color', '#34495f'),
+					_0: A2(_user$project$View_ops['=>'], 'font-family', 'Helvetica, Arial, sans-serif'),
 					_1: {
 						ctor: '::',
-						_0: A2(_user$project$View_ops['=>'], 'font-family', 'Helvetica, Arial, sans-serif'),
+						_0: A2(_user$project$View_ops['=>'], 'font-size', '4vh'),
 						_1: {
 							ctor: '::',
-							_0: A2(_user$project$View_ops['=>'], 'font-size', '5vh'),
+							_0: A2(_user$project$View_ops['=>'], 'font-weight', '300'),
 							_1: {
 								ctor: '::',
-								_0: A2(_user$project$View_ops['=>'], 'font-weight', '300'),
+								_0: A2(_user$project$View_ops['=>'], 'position', 'fixed'),
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$View_ops['=>'], 'position', 'fixed'),
+									_0: A2(_user$project$View_ops['=>'], 'left', '50%'),
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$View_ops['=>'], 'left', '50%'),
+										_0: A2(_user$project$View_ops['=>'], 'top', '45%'),
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$View_ops['=>'], 'top', '45%'),
+											_0: A2(_user$project$View_ops['=>'], 'width', '90%'),
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$View_ops['=>'], 'width', '90%'),
+												_0: A2(_user$project$View_ops['=>'], 'height', '55%'),
 												_1: {
 													ctor: '::',
-													_0: A2(_user$project$View_ops['=>'], 'height', '55%'),
+													_0: A2(_user$project$View_ops['=>'], 'transform', 'translate(-50%, -50%)'),
 													_1: {
 														ctor: '::',
-														_0: A2(_user$project$View_ops['=>'], 'transform', 'translate(-50%, -50%)'),
+														_0: A2(_user$project$View_ops['=>'], 'margin', '0 auto'),
 														_1: {
 															ctor: '::',
-															_0: A2(_user$project$View_ops['=>'], 'margin', '0 auto'),
+															_0: A2(_user$project$View_ops['=>'], 'text-align', 'center'),
 															_1: {ctor: '[]'}
 														}
 													}
@@ -10810,7 +11000,7 @@ var _user$project$View$showIntro = A2(
 		_0: A2(
 			_evancz$elm_markdown$Markdown$toHtml,
 			{ctor: '[]'},
-			'\nelm-flatris is a [**Flatris**](https://github.com/skidding/flatris)\nclone coded in [**Elm**](http://elm-lang.org/) language.\n\nInspired by the classic [**Tetris**](http://en.wikipedia.org/wiki/Tetris)\ngame, the game can be played with a keyboard using the arrow keys,\nand on mobile devices using the buttons below.\n\nelm-flatris is open source on\n[**GitHub**](https://github.com/w0rm/elm-flatris).\n'),
+			'\nThis game is a [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html)\nclone coded in [**Elm**](http://elm-lang.org/) language.\n\nUnlike the original game, expressions don\'t reduce completely at once,\nbut step by step, so that you could stop infinite loops.\nScoring also is slightly different but intuitive.\n\nUse arrow keys or screen buttons to play the game.\n\nThe game is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).\n'),
 		_1: {ctor: '[]'}
 	});
 var _user$project$View$showOrientationHint = A2(
@@ -10891,10 +11081,7 @@ var _user$project$View$view = function (model) {
 						_0: _user$project$View$showGameButton(model.state),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$core$Native_Utils.eq(_user$project$Common$Playing, model.state) ? _user$project$View$showControls : A2(
-								_elm_lang$html$Html$div,
-								{ctor: '[]'},
-								{ctor: '[]'}),
+							_0: _elm_lang$core$Native_Utils.eq(_user$project$Common$Playing, model.state) ? _user$project$View$showControls : _user$project$View$showRules,
 							_1: {ctor: '[]'}
 						}
 					}
