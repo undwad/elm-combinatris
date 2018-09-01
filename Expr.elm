@@ -122,9 +122,9 @@ update : (Terms -> Terms) -> Expr -> Expr
 update f expr =
   let
     terms    = f expr.terms
-    width    = getWidth terms
-    text     = log "" <| toString terms
+    text     = toString terms
+    width    = String.length text
     applying = canApply terms
-    score    = expr.score + (max 0 <| expr.width - width)
+    score    = expr.score + (max 0 <| String.length expr.text - String.length text)
   in
-    { terms = terms, width = width, text = text, applying = applying, score = score }
+    { terms = terms, text = text, width = width, applying = applying, score = score }

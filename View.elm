@@ -47,7 +47,6 @@ showTerm tag term =
             let
               spaces  = List.repeat (n - List.length cc) (show1 "span" "black" opacity space)
               terms  = List.concat <| List.map (show2 "span" <| depth + 1) cc
-
             in
               [ show1 tag "black" opacity "(" ] ++ spaces ++ terms ++ [ show1 tag "black" opacity ")" ]
   in

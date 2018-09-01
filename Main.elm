@@ -128,6 +128,5 @@ subscriptions model =
           in
                    [ move, key ]
         _       -> [ ]
-
   in
     Sub.batch <| [ size ] ++ rest
