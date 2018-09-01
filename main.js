@@ -10080,6 +10080,33 @@ var _user$project$Misc$goto = function (_p2) {
 		_elm_lang$core$Task$succeed(_p2));
 };
 
+var _user$project$View$showOrientationHint = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$id('orientationHint'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$img,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$src('orientation.svg'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$width(200),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$height(400),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{ctor: '[]'}),
+		_1: {ctor: '[]'}
+	});
 var _user$project$View$showIntro = A2(
 	_elm_lang$html$Html$div,
 	{
@@ -10654,70 +10681,17 @@ var _user$project$View$showRules = A2(
 			}
 		}
 	});
-var _user$project$View$showOrientationHint = A2(
-	_elm_lang$html$Html$div,
-	{
-		ctor: '::',
-		_0: _elm_lang$html$Html_Attributes$style(
-			{
-				ctor: '::',
-				_0: A2(_user$project$View_ops['=>'], 'position', 'fixed'),
-				_1: {
-					ctor: '::',
-					_0: A2(_user$project$View_ops['=>'], 'left', '50%'),
-					_1: {
-						ctor: '::',
-						_0: A2(_user$project$View_ops['=>'], 'top', '50%'),
-						_1: {
-							ctor: '::',
-							_0: A2(_user$project$View_ops['=>'], 'transform', 'translate(-50%, -50%)'),
-							_1: {
-								ctor: '::',
-								_0: A2(_user$project$View_ops['=>'], 'margin', '0 auto'),
-								_1: {ctor: '[]'}
-							}
-						}
-					}
-				}
-			}),
-		_1: {ctor: '[]'}
-	},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$img,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$src('orientation.svg'),
-				_1: {
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$width(200),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$height(400),
-						_1: {ctor: '[]'}
-					}
-				}
-			},
-			{ctor: '[]'}),
-		_1: {ctor: '[]'}
-	});
 var _user$project$View$view = function (model) {
 	return _elm_lang$core$Native_Utils.eq(_user$project$Common$Landscape, model.orient) ? A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$style(
-				{
-					ctor: '::',
-					_0: A2(_user$project$View_ops['=>'], 'min-height', '100%'),
-					_1: {ctor: '[]'}
-				}),
+			_0: _elm_lang$html$Html_Attributes$id('main'),
 			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
-			_0: _user$project$View$showCaption('Combinatris in Elm 4'),
+			_0: _user$project$View$showCaption('Combinatris in Elm 5'),
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$core$Native_Utils.eq(_user$project$Common$Loaded, model.state) ? _user$project$View$showIntro : _user$project$View$showTable(model),

@@ -196,15 +196,7 @@ The game is open source on [**GitHub**](https://github.com/undwad/elm-combinatri
 
 showOrientationHint : Html Msg
 showOrientationHint =
-  div
-  [ style
-    [ "position"    => "fixed"
-    , "left"        => "50%"
-    , "top"         => "50%"
-    , "transform"   => "translate(-50%, -50%)"
-    , "margin"      => "0 auto"
-    ]
-  ]
+  div [ id "orientationHint" ]
   [ img
     [ src "orientation.svg"
     , width 200
@@ -216,12 +208,8 @@ showOrientationHint =
 view : Model -> Html Msg
 view model =
   if Landscape == model.orient then
-    div
-    [ style
-      [ "min-height" => "100%"
-      ]
-    ]
-    [ showCaption "Combinatris in Elm 4"
+    div [ id "main" ]
+    [ showCaption "Combinatris in Elm 5"
     , if Loaded == model.state then showIntro else showTable model
     , if Loaded /= model.state then showInfo model.next model.score else div [] []
     , showGameButton model.state

@@ -5,6 +5,11 @@ body
     background : #EAE6DA;
 }
 
+#main
+{
+  min-height : 100%
+}
+
 #table
 {
   font-family : monospace;
@@ -135,4 +140,13 @@ body
   transform   : translate(-50%, -50%);
   margin      : 0 auto;
   text-align  : center;
+}
+
+#orientationHint
+{
+  position  : fixed;
+  left      : 50%;
+  top       : 50%;
+  transform : translate(-50%, -50%);
+  margin    : 0 auto;
 }
