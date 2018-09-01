@@ -10691,7 +10691,7 @@ var _user$project$View$view = function (model) {
 		},
 		{
 			ctor: '::',
-			_0: _user$project$View$showCaption('Combinatris in Elm 5'),
+			_0: _user$project$View$showCaption('Combinatris in Elm'),
 			_1: {
 				ctor: '::',
 				_0: _elm_lang$core$Native_Utils.eq(_user$project$Common$Loaded, model.state) ? _user$project$View$showIntro : _user$project$View$showTable(model),

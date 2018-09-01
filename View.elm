@@ -209,7 +209,7 @@ view : Model -> Html Msg
 view model =
   if Landscape == model.orient then
     div [ id "main" ]
-    [ showCaption "Combinatris in Elm 5"
+    [ showCaption "Combinatris in Elm"
     , if Loaded == model.state then showIntro else showTable model
     , if Loaded /= model.state then showInfo model.next model.score else div [] []
     , showGameButton model.state
