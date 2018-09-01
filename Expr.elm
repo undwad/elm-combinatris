@@ -1,4 +1,4 @@
-module Expr exposing (Term(..), Expr, init, getWidth, append, apply, update)
+module Expr exposing (Term(..), Expr, init, getWidth, append, apply, update, toString)
 
 import List
 import String
@@ -13,14 +13,13 @@ type alias Terms = List Term
 
 type alias Expr =
   { terms    : Terms
-  , text     : String
   , width    : Int
   , applying : Int
   , score    : Int
   }
 
 init : Expr
-init = { terms = [], text = "", width = 0, applying = 0, score = 0 }
+init = { terms = [], width = 0, applying = 0, score = 0 }
 
 getWidth : Terms -> Int
 getWidth expr =
@@ -122,9 +121,8 @@ update : (Terms -> Terms) -> Expr -> Expr
 update f expr =
   let
     terms    = f expr.terms
-    text     = toString terms
-    width    = String.length text
+    width    = getWidth terms
     applying = canApply terms
-    score    = expr.score + (max 0 <| String.length expr.text - String.length text)
+    score    = expr.score + (max 0 <| expr.width - width)
   in
-    { terms = terms, text = text, width = width, applying = applying, score = score }
+    { terms = terms, width = width, applying = applying, score = score }

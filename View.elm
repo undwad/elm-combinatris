@@ -63,7 +63,7 @@ showRow mbcurr y expr =
             let
               currCells   = showTerm "span" curr.term
               emptyCells1 = getEmptyCells curr.x
-              emptyCells2 = getEmptyCells <| sizes.width - expr.width - curr.x - List.length currCells
+              emptyCells2 = getEmptyCells <| sizes.width - expr.width - curr.x - curr.width
             in
               emptyCells1 ++ currCells ++ emptyCells2
           else
@@ -77,70 +77,23 @@ showRow mbcurr y expr =
 
 showTable : Model -> Html Msg
 showTable model =
-  div
-  [ style
-    [ "font-family" => "monospace"
-    , "font-size"   => "6vh"
-    , "font-weight" => "300"
-    , "white-space" => "pre"
-    , "position"    => "fixed"
-    , "left"        => "50%"
-    , "top"         => "40%"
-    , "transform"   => "translate(-50%, -50%)"
-    , "margin"      => "0 auto"
-    ]
-  ]
+  div [ id "table" ]
   [ table []
     (List.indexedMap (\i -> tr [] << showRow model.curr i) <| Array.toList model.exprs)
   ]
 
 showCaption : String -> Html Msg
-showCaption txt =
-  div
-  [ style
-    [ "font-family" => "Helvetica, Arial, sans-serif"
-    , "font-size"   => "10vh"
-    , "font-weight" => "300"
-    , "position"    => "fixed"
-    , "left"        => "50%"
-    , "top"         => "10px"
-    , "color"       => "#3993d0"
-    , "line-height" => "1"
-    , "text-align"  => "center"
-    , "transform"   => "translate(-50%, 0%)"
-    , "margin"      => "0 auto"
-    ]
-  ]
-  [ text txt ]
+showCaption txt = div [ id "caption" ] [ text txt ]
 
 coloredText : String -> String -> Html Msg
 coloredText clr txt = div [ style [ "color" => clr ] ] [ text txt ]
 
 horzDiv : List (Html Msg) -> Html Msg
-horzDiv children =
-  div
-  [ style
-    [ "display" => "flex"
-    , "margin"  => "10px 0 0 0"
-    ]
-  ] children
+horzDiv children = div [ class "horzDiv" ] children
 
 showInfo : Term -> Int -> Html Msg
 showInfo next score =
-  div
-  [ style
-    [ "font-family" => "Helvetica, Arial, sans-serif"
-    , "font-size"   => "10vh"
-    , "font-weight" => "300"
-    , "position"    => "fixed"
-    , "margin"      => "10px 0 0"
-    , "left"        => "10px"
-    , "bottom"      => "10px"
-    , "line-height" => "1"
-    , "text-align"  => "center"
-    , "white-space" => "pre"
-    ]
-  ]
+  div [ id "info" ]
   [ horzDiv <| (coloredText "#bdc3c7" "Next: ")::(showTerm "span" next)
   , horzDiv [ coloredText "#bdc3c7" "Score: ", coloredText "#3993d0" <| toString score ]
   ]
@@ -155,75 +108,18 @@ showGameButton state =
         Playing  -> ("Pause",   Pause)
         Paused   -> ("Resume",  Resume)
   in
-    button
-    [ style
-      [ "font-family" => "Helvetica, Arial, sans-serif"
-      , "font-size"   => "7vh"
-      , "font-weight" => "300"
-      , "background"  => "#34495f"
-      , "border"      => "0"
-      , "color"       => "#fff"
-      , "cursor"      => "pointer"
-      , "display"     => "block"
-      , "outline"     => "none"
-      , "padding"     => "0"
-      , "width"       => "35vh"
-      , "height"      => "15vh"
-      , "line-height" => "15vh"
-      , "position"    => "fixed"
-      , "left"        => "50%"
-      , "bottom"      => "10px"
-      , "transform"   => "translate(-50%, 0%)"
-      , "margin"      => "0 auto 0"
-      ]
-      , onClick msg
-    ]
-    [ text txt ]
+    button [ id "gameButton", onClick msg ] [ text txt ]
 
 showControlButton : String -> List (Html.Attribute Msg) -> Html Msg
-showControlButton txt attrs =
-  div
-    (style
-      [ "background"          => "#34495f"
-      , "border"              => "0"
-      , "color"               => "#fff"
-      , "cursor"              => "pointer"
-      , "text-align"          => "center"
-      , "-webkit-user-select" => "none"
-      , "font-family"         => "Helvetica, Arial, sans-serif"
-      , "font-size"           => "10vh"
-      , "font-weight"         => "300"
-      , "width"               => "15vh"
-      , "height"              => "15vh"
-      , "line-height"         => "15vh"
-      , "margin"              => "10px 0 0 0"
-      , "outline"             => "none"
-      , "padding"             => "0"
-      ]
-      :: attrs
-    )
-    [ text txt ]
+showControlButton txt attrs = div (class "controlButton" :: attrs) [ text txt ]
 
 showControls : Html Msg
 showControls =
-  div
-  [ style
-    [ "margin"   => "0 auto 0"
-    , "position" => "fixed"
-    , "right"    => "10px"
-    , "bottom"   => "10px"
-    , "display"  => "flex"
-    ]
-  ]
-  [ div
-    [ style
-        [ "margin" => "25% 10px 0 0"
-        ]
-    ]
+  div [ id "controls" ]
+  [ div [ id "arrowLeft" ]
     [ showControlButton "→" [ onMouseDown Throw, onTouchStart Throw ]
     ]
-  , div
-    []
+  , div []
     [ showControlButton "↑" [ onMouseDown Up,    onTouchStart Up    ]
     , showControlButton "↓" [ onMouseDown Down,  onTouchStart Down  ]
     ]
@@ -274,19 +170,7 @@ showRule term =
 
 showRules : Html Msg
 showRules =
-  div
-  [ style
-    [ "margin"      => "0 auto 0"
-    , "position"    => "fixed"
-    , "right"       => "10px"
-    , "bottom"      => "10px"
-    , "font-family" => "Helvetica, Arial, sans-serif"
-    , "font-size"   => "4vh"
-    , "font-weight" => "300"
-    , "white-space" => "pre"
-    , "display"     => "block"
-    ]
-  ]
+  div [ id "rules" ]
   [ showRule I
   , showRule K
   , showRule S
@@ -295,22 +179,7 @@ showRules =
 
 showIntro : Html Msg
 showIntro =
-  div
-  [ style
-    [ "color"       => "#34495f"
-    , "font-family" => "Helvetica, Arial, sans-serif"
-    , "font-size"   => "4vh"
-    , "font-weight" => "300"
-    , "position"    => "fixed"
-    , "left"        => "50%"
-    , "top"         => "45%"
-    , "width"       => "90%"
-    , "height"      => "55%"
-    , "transform"   => "translate(-50%, -50%)"
-    , "margin"      => "0 auto"
-    , "text-align"  => "center"
-    ]
-  ]
+  div [ id "intro" ]
   [ Markdown.toHtml [] """
 This game is a [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html)
 clone coded in [**Elm**](http://elm-lang.org/) language.
@@ -352,7 +221,7 @@ view model =
       [ "min-height" => "100%"
       ]
     ]
-    [ showCaption "Combinatris in Elm"
+    [ showCaption "Combinatris in Elm 4"
     , if Loaded == model.state then showIntro else showTable model
     , if Loaded /= model.state then showInfo model.next model.score else div [] []
     , showGameButton model.state

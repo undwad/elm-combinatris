@@ -6,9 +6,9 @@ import Window exposing (Size)
 
 import Expr exposing (..)
 
-sizes       = { width = 30, height = 5 }                
+sizes       = { width = 30, height = 5 }
 space       = "_"
-intervals    = { min = 50.0, max = 500.0, dec = 0.5 }
+intervals   = { min = 50.0, max = 500.0, dec = 0.5 }
 termWeights =
   [ (I, 3)
   , (K, 3)
