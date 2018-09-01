@@ -5,6 +5,7 @@ import String
 import Random
 import Tuple
 import Maybe exposing (Maybe, withDefault)
+import Debug exposing (log)
 
 type Term = I | K | S | Y | Scope Int Terms
 
@@ -12,13 +13,14 @@ type alias Terms = List Term
 
 type alias Expr =
   { terms    : Terms
+  , text     : String
   , width    : Int
   , applying : Int
   , score    : Int
   }
 
 init : Expr
-init = { terms = [], width = 0, applying = 0, score = 0 }
+init = { terms = [], text = "", width = 0, applying = 0, score = 0 }
 
 getWidth : Terms -> Int
 getWidth expr =
@@ -35,6 +37,22 @@ getWidth expr =
     case expr of
       s::rest -> width1 s + getWidth rest
       _ -> 0
+
+toString : Terms -> String
+toString expr =
+  let
+    toString1 s =
+      case s of
+        Scope n cc ->
+          let
+            spaces = String.repeat (n - List.length cc) " "
+          in
+            "(" ++ spaces ++ toString cc ++ ")"
+        _ -> Basics.toString s
+  in
+    case expr of
+      s::rest -> toString1 s ++ toString rest
+      []      -> ""
 
 canApply : Terms -> Int
 canApply expr =
@@ -105,7 +123,8 @@ update f expr =
   let
     terms    = f expr.terms
     width    = getWidth terms
+    text     = log "" <| toString terms
     applying = canApply terms
     score    = expr.score + (max 0 <| expr.width - width)
   in
-    { terms = terms, width = width, applying = applying, score = score }
+    { terms = terms, width = width, text = text, applying = applying, score = score }
