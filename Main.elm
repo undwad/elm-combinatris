@@ -30,7 +30,7 @@ makeCurr c =
   { term  = c
   , width = Expr.getWidth [c]
   , x     = 0
-  , y     = floor (height / 2)
+  , y     = floor (sizes.height / 2)
   }
 
 nextCurr : Cmd Msg
@@ -40,7 +40,7 @@ getSize : Cmd Msg
 getSize = Task.perform Resize Window.size
 
 init : (Model, Cmd Msg)
-init = (Model (Array.repeat height Expr.init) Loaded Nothing I 0 Portrait, getSize)
+init = (Model (Array.repeat sizes.height Expr.init) Loaded Nothing I 0 Portrait, getSize)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -49,8 +49,8 @@ update msg model =
     apply         = Array.map (\expr -> if expr.applying > 0 then Expr.update Expr.apply expr else expr)
     incX dx curr  = { curr | x = curr.x + dx }
     incY dy curr  = { curr | y = curr.y + dy }
-    canPlay       = List.all ((>) width << .width) << Array.toList
-    canMove x y   = (<) x << (-) width << withDefault width << Maybe.map (.width) << Array.get y
+    canPlay       = List.all ((>) sizes.width << .width) << Array.toList
+    canMove x y   = (<) x << (-) sizes.width << withDefault sizes.width << Maybe.map (.width) << Array.get y
     sumScores     = List.sum << List.map (.score) << Array.toList
     restart m     =
       let
@@ -89,7 +89,7 @@ update msg model =
       Next c      -> ({ model | curr = Just <| makeCurr model.next, next = c }, Cmd.none)
       Up          -> (control -1 model, Cmd.none)
       Down        -> (control  1 model, Cmd.none)
-      Throw       -> (move width model, Cmd.none)
+      Throw       -> (move sizes.width model, Cmd.none)
       Resize size -> (resize size model, Cmd.none)
       Idle        -> (model, Cmd.none)
       Move _      ->
@@ -113,7 +113,7 @@ subscriptions model =
       case model.state of
         Playing ->
           let
-            ms   = max (maxInterval - decInterval * toFloat model.score) minInterval
+            ms   = max (intervals.max - intervals.dec * toFloat model.score) intervals.min
             move = Time.every (ms * millisecond) Move
             key  =
               Keyboard.downs

@@ -64,17 +64,17 @@ showRow mbcurr y expr =
             let
               currCells   = showTerm "span" curr.term
               emptyCells1 = getEmptyCells curr.x
-              emptyCells2 = getEmptyCells <| Common.width - expr.width - curr.x - List.length currCells
+              emptyCells2 = getEmptyCells <| sizes.width - expr.width - curr.x - List.length currCells
             in
               emptyCells1 ++ currCells ++ emptyCells2
           else
-            getEmptyCells (Common.width - expr.width)
-        Nothing -> getEmptyCells (Common.width - expr.width)
+            getEmptyCells (sizes.width - expr.width)
+        Nothing -> getEmptyCells (sizes.width - expr.width)
     getTag i  = if i < expr.applying then "strong" else "span"
     busyCells = List.concat <| List.indexedMap (showTerm << getTag) <| expr.terms
     cells     = emptyCells ++ busyCells
   in
-    List.drop (List.length cells - Common.width) cells
+    List.drop (List.length cells - sizes.width) cells
 
 showTable : Model -> Html Msg
 showTable model =
@@ -339,8 +339,8 @@ showOrientationHint =
   ]
   [ img
     [ src "orientation.svg"
-    , Html.Attributes.width 200
-    , Html.Attributes.height 400
+    , width 200
+    , height 400
     ]
     []
   ]
