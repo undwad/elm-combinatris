@@ -2,8 +2,9 @@ module Common exposing (..)
 
 import Array exposing (Array)
 import Time exposing (Posix)
--- import Window exposing (Size)
+import Browser.Dom exposing (Viewport)
 
+import Port exposing (Size)
 import Expr exposing (..)
 
 sizes       = { width = 30, height = 5 }
@@ -48,4 +49,4 @@ type Msg
   | Up
   | Down
   | Throw
-  -- | Resize Size
+  | Resize Size

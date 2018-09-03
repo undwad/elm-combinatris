@@ -21,9 +21,15 @@
 <body>
     <div id="elm"></div>
     <script>
-      Elm.Main.init({ node: document.getElementById('elm')
-                    // , flags: 
-                    })
+      const app = Elm.Main.init({ node: document.getElementById('elm') });
+
+      setInterval(() =>
+      {
+        const width  = Math.min(document.documentElement.clientWidth, window.innerWidth || Number.MAX_VALUE);
+        const height = Math.min(document.documentElement.clientHeight, window.innerHeight || Number.MAX_VALUE);
+        app.ports.clientSize.send({ width, height });
+      }, 1000);
+      
     </script>
 </body>
 </html>

@@ -9,12 +9,14 @@ import String
 import Random
 import Tuple
 import Task
+import Result
 import Maybe exposing (Maybe, withDefault)
 import Time exposing (Posix)
 import Json.Decode as Decode
--- import Window exposing (Size)
+import Browser.Dom exposing (Viewport)
 import Debug exposing (toString, log)
 
+import Port exposing (Size)
 import Misc exposing (..)
 import Expr exposing (Expr, Term(..))
 import Common exposing(..)
@@ -36,14 +38,20 @@ makeCurr c =
   }
 
 nextCurr : Cmd Msg
---nextCurr = Random.generate Next <| weightedRandomGenerator I termWeights
 nextCurr = Random.generate Next <|  Random.weighted (0.0, I) termWeights
 
--- getSize : Cmd Msg
--- getSize = Task.perform Resize Window.size
+ getSize : Cmd Msg
+-- getSize =
+--   let
+--     decode v =
+--       case Decode.decodeValue Port.decodeSize v of
+--         Ok s  -> Resize s
+--         Err _ -> Idle
+--   in
+--     Port.clientSize decode
 
 init : () -> (Model, Cmd Msg)
-init _ = (Model (Array.repeat sizes.height Expr.init) Loaded Nothing I 0 Landscape, nextCurr)
+init _ = (Model (Array.repeat sizes.height Expr.init) Loaded Nothing I 0 Portrait, Cmd.none)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -60,16 +68,16 @@ update msg model =
         m2 = Tuple.first <| init ()
       in
           { m2 | state = Playing, next = m.next, orient = m.orient }
-    -- resize size m =
-    --   let
-    --     orient =
-    --       if (toFloat size.width / toFloat size.height) >= 4.0 / 3.0 then Landscape
-    --                                                                  else Portrait
-    --     state  =
-    --       if Portrait == orient && Playing == m.state then Paused
-    --                                                   else m.state
-    --   in
-    --     { m | orient = orient, state = state }
+    resize size m =
+      let
+        orient =
+          if (toFloat size.width / toFloat size.height) >= 4.0 / 3.0 then Landscape
+                                                                     else Portrait
+        state  =
+          if Portrait == orient && Playing == m.state then Paused
+                                                      else m.state
+      in
+        { m | orient = orient, state = state }
     control dy m  =
       case m.curr of
         Just curr ->
@@ -93,7 +101,7 @@ update msg model =
       Up          -> (control -1 model, Cmd.none)
       Down        -> (control  1 model, Cmd.none)
       Throw       -> (move sizes.width model, Cmd.none)
-      -- Resize size -> (resize size model, Cmd.none)
+      Resize size -> (resize size model, Cmd.none)
       Idle        -> (model, Cmd.none)
       Move _      ->
         let
@@ -111,7 +119,14 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model =
   let
-    --size = Window.resizes Resize
+    size =
+      let
+        decode v =
+          case Decode.decodeValue Port.decodeSize v of
+            Ok s  -> Resize s
+            Err _ -> Idle
+      in
+        Port.clientSize decode
     rest =
       case model.state of
         Playing ->
@@ -134,5 +149,4 @@ subscriptions model =
                    [ move, key ]
         _       -> [ ]
   in
-    --Sub.batch <| [ size ] ++ rest
-    Sub.batch rest
+    Sub.batch <| [ size ] ++ rest
