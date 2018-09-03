@@ -23,13 +23,16 @@
     <script>
       const app = Elm.Main.init({ node: document.getElementById('elm') });
 
-      setInterval(() =>
+      const getClientSize = () =>
       {
         const width  = Math.min(document.documentElement.clientWidth, window.innerWidth || Number.MAX_VALUE);
         const height = Math.min(document.documentElement.clientHeight, window.innerHeight || Number.MAX_VALUE);
         app.ports.clientSize.send({ width, height });
-      }, 1000);
-      
+      };
+
+      getClientSize();
+      setInterval(getClientSize, 1000);
+
     </script>
 </body>
 </html>
