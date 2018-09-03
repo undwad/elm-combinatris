@@ -1,2 +1,2 @@
-elm-make.exe Main.elm --output main.js 
+elm make Main.elm --output main.js 
 pause

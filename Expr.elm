@@ -2,10 +2,9 @@ module Expr exposing (Term(..), Expr, init, getWidth, append, apply, update, toS
 
 import List
 import String
-import Random
 import Tuple
 import Maybe exposing (Maybe, withDefault)
-import Debug exposing (log)
+import Debug exposing (toString, log)
 
 type Term = I | K | S | Y | Scope Int Terms
 
@@ -47,7 +46,7 @@ toString expr =
             spaces = String.repeat (n - List.length cc) " "
           in
             "(" ++ spaces ++ toString cc ++ ")"
-        _ -> Basics.toString s
+        _ -> Debug.toString s
   in
     case expr of
       s::rest -> toString1 s ++ toString rest
@@ -76,9 +75,9 @@ append c terms =
   let
     insert1 x y =
       case y of
-        Scope n cc ->
+        Scope n ccc ->
           let
-            m = List.foldr (insert2 x) (False, []) cc
+            m = List.foldr (insert2 x) (False, []) ccc
           in
             case m of
               (True, cc)  -> Just (Scope n cc)
@@ -98,9 +97,9 @@ append c terms =
               Nothing -> (False, y::cc)
   in
     case terms of
-      s::rest ->
+      fst::rest ->
         let
-          m = insert1 c s
+          m = insert1 c fst
         in
           case m of
             Just s  -> s::rest

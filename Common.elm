@@ -1,8 +1,8 @@
 module Common exposing (..)
 
 import Array exposing (Array)
-import Time exposing (Time)
-import Window exposing (Size)
+import Time exposing (Posix)
+-- import Window exposing (Size)
 
 import Expr exposing (..)
 
@@ -10,12 +10,12 @@ sizes       = { width = 30, height = 5 }
 space       = "_"
 intervals   = { min = 50.0, max = 500.0, dec = 0.5 }
 termWeights =
-  [ (I, 3)
-  , (K, 3)
-  , (S, 2)
-  , (Y, 2)
-  , (Scope 2 [], 1)
-  , (Scope 3 [], 1)
+  [ (3.0, I)
+  , (3.0, K)
+  , (2.0, S)
+  , (2.0, Y)
+  , (1.0, Scope 2 [])
+  , (1.0, Scope 3 [])
   ]
 
 type alias Curr =
@@ -39,13 +39,13 @@ type alias Model =
   }
 
 type Msg
-  = Resize Size
+  = Idle
   | Start
   | Pause
   | Resume
   | Next Term
-  | Move Time
+  | Move Posix
   | Up
   | Down
   | Throw
-  | Idle
+  -- | Resize Size

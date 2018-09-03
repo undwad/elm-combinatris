@@ -4,31 +4,31 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Array exposing (Array)
-import Json.Decode as Json
+import Json.Decode as Decode
 import Markdown
+import Debug exposing (toString, log)
 
 import Common exposing(..)
 import Expr exposing (Expr, Term(..))
 
-(=>) : a -> b -> (a, b)
-(=>) = (,)
+alwaysPreventDefault : msg -> ( msg, Bool )
+alwaysPreventDefault msg = ( msg, True )
 
 onTouchStart : Msg -> Html.Attribute Msg
-onTouchStart msg = onWithOptions "touchstart" { stopPropagation = True, preventDefault = True } (Json.succeed msg)
-
-onTouchEnd : Msg -> Html.Attribute Msg
-onTouchEnd msg = onWithOptions "touchend" { stopPropagation = True, preventDefault = True } (Json.succeed msg)
+onTouchStart msg = preventDefaultOn "touchstart" (Decode.map alwaysPreventDefault (Decode.succeed msg))
 
 showTerm : String -> Term -> List (Html Msg)
 showTerm tag term =
   let
-    show1 tag color opacity ch =
+    show1 tag1 color opacity ch =
       td []
-      [ (node tag)
-        [ style [ "color" => color, "opacity" => opacity ] ]
+      [ (node tag1)
+        [ style "color"   color
+        , style "opacity" opacity
+        ]
         [ text ch ]
       ]
-    show2 tag depth term =
+    show2 tag2 depth term2 =
       let
         opacity =
           case depth of
@@ -38,17 +38,17 @@ showTerm tag term =
             3 -> "0.3"
             _ -> "0.2"
       in
-        case term of
-          I -> [ show1 tag "blue"  opacity "I" ]
-          K -> [ show1 tag "brown" opacity "K" ]
-          S -> [ show1 tag "green" opacity "S" ]
-          Y -> [ show1 tag "red"   opacity "Y" ]
+        case term2 of
+          I -> [ show1 tag2 "blue"  opacity "I" ]
+          K -> [ show1 tag2 "brown" opacity "K" ]
+          S -> [ show1 tag2 "green" opacity "S" ]
+          Y -> [ show1 tag2 "red"   opacity "Y" ]
           Scope n cc ->
             let
               spaces  = List.repeat (n - List.length cc) (show1 "span" "black" opacity space)
               terms  = List.concat <| List.map (show2 "span" <| depth + 1) cc
             in
-              [ show1 tag "black" opacity "(" ] ++ spaces ++ terms ++ [ show1 tag "black" opacity ")" ]
+              [ show1 tag2 "black" opacity "(" ] ++ spaces ++ terms ++ [ show1 tag2 "black" opacity ")" ]
   in
     show2 tag 0 term
 
@@ -86,7 +86,7 @@ showCaption : String -> Html Msg
 showCaption txt = div [ id "caption" ] [ text txt ]
 
 coloredText : String -> String -> Html Msg
-coloredText clr txt = div [ style [ "color" => clr ] ] [ text txt ]
+coloredText clr txt = div [ style "color" clr ] [ text txt ]
 
 horzDiv : List (Html Msg) -> Html Msg
 horzDiv children = div [ class "horzDiv" ] children
