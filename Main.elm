@@ -40,16 +40,6 @@ makeCurr c =
 nextCurr : Cmd Msg
 nextCurr = Random.generate Next <|  Random.weighted (0.0, I) termWeights
 
- getSize : Cmd Msg
--- getSize =
---   let
---     decode v =
---       case Decode.decodeValue Port.decodeSize v of
---         Ok s  -> Resize s
---         Err _ -> Idle
---   in
---     Port.clientSize decode
-
 init : () -> (Model, Cmd Msg)
 init _ = (Model (Array.repeat sizes.height Expr.init) Loaded Nothing I 0 Portrait, Cmd.none)
 
