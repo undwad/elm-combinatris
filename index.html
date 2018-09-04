@@ -21,7 +21,8 @@
 <body>
     <div id="elm"></div>
     <script>
-      const app = Elm.Main.init({ node: document.getElementById('elm') });
+      const div = document.getElementById("elm");
+      const app  = Elm.Main.init({ node: div });
 
       const getClientSize = () =>
       {
@@ -31,7 +32,8 @@
       };
 
       getClientSize();
-      setInterval(getClientSize, 1000);
+
+      document.body.onresize = getClientSize;
 
     </script>
 </body>
