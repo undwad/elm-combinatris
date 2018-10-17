@@ -1841,7 +1841,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bo,
+		impl.bp,
 		impl.bL,
 		impl.bI,
 		function() { return function() {} }
@@ -2689,7 +2689,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		bs: func(record.bs),
+		bt: func(record.bt),
 		bG: record.bG,
 		bA: record.bA
 	}
@@ -2959,7 +2959,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.bs;
+		var message = !tag ? value : tag < 3 ? value.a : value.bt;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.bG;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -3909,7 +3909,7 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bo,
+		impl.bp,
 		impl.bL,
 		impl.bI,
 		function(sendToApp, initialModel) {
@@ -3945,7 +3945,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bo,
+		impl.bp,
 		impl.bL,
 		impl.bI,
 		function(sendToApp, initialModel) {
@@ -3958,7 +3958,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bd);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.be);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4014,8 +4014,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bw;
-	var onUrlRequest = impl.bx;
+	var onUrlChange = impl.bx;
+	var onUrlRequest = impl.by;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4035,9 +4035,9 @@ function _Browser_application(impl)
 					var next = elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aY === next.aY
+							&& curr.aZ === next.aZ
 							&& curr.aM === next.aM
-							&& curr.aV.a === next.aV.a
+							&& curr.aW.a === next.aW.a
 						)
 							? elm$browser$Browser$Internal(next)
 							: elm$browser$Browser$External(href)
@@ -4045,9 +4045,9 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bo: function(flags)
+		bp: function(flags)
 		{
-			return A3(impl.bo, flags, _Browser_getUrl(), key);
+			return A3(impl.bp, flags, _Browser_getUrl(), key);
 		},
 		bN: impl.bN,
 		bL: impl.bL,
@@ -4117,17 +4117,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bl: 'hidden', T: 'visibilitychange' }
+		? { bm: 'hidden', T: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bl: 'mozHidden', T: 'mozvisibilitychange' }
+		? { bm: 'mozHidden', T: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bl: 'msHidden', T: 'msvisibilitychange' }
+		? { bm: 'msHidden', T: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bl: 'webkitHidden', T: 'webkitvisibilitychange' }
-		: { bl: 'hidden', T: 'visibilitychange' };
+		? { bm: 'webkitHidden', T: 'webkitvisibilitychange' }
+		: { bm: 'hidden', T: 'visibilitychange' };
 }
 
 
@@ -4208,8 +4208,8 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		a1: _Browser_getScene(),
-		ba: {
+		a2: _Browser_getScene(),
+		bb: {
 			Q: _Browser_window.pageXOffset,
 			y: _Browser_window.pageYOffset,
 			i: _Browser_doc.documentElement.clientWidth,
@@ -4247,11 +4247,11 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			a1: {
+			a2: {
 				i: node.scrollWidth,
 				ag: node.scrollHeight
 			},
-			ba: {
+			bb: {
 				Q: node.scrollLeft,
 				y: node.scrollTop,
 				i: node.clientWidth,
@@ -4285,14 +4285,14 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			a1: _Browser_getScene(),
-			ba: {
+			a2: _Browser_getScene(),
+			bb: {
 				Q: x,
 				y: y,
 				i: _Browser_doc.documentElement.clientWidth,
 				ag: _Browser_doc.documentElement.clientHeight
 			},
-			bi: {
+			bj: {
 				Q: x + rect.left,
 				y: y + rect.top,
 				i: rect.width,
@@ -4340,8 +4340,8 @@ var _Regex_never = /.^/;
 var _Regex_fromStringWith = F2(function(options, string)
 {
 	var flags = 'g';
-	if (options.bt) { flags += 'm'; }
-	if (options.bf) { flags += 'i'; }
+	if (options.bu) { flags += 'm'; }
+	if (options.bg) { flags += 'i'; }
 
 	try
 	{
@@ -4693,9 +4693,9 @@ function _Markdown_formatOptions(options)
 		highlight: toHighlight,
 		gfm: gfm,
 		tables: gfm && gfm.bJ,
-		breaks: gfm && gfm.be,
-		sanitize: options.a0,
-		smartypants: options.a3
+		breaks: gfm && gfm.bf,
+		sanitize: options.a1,
+		smartypants: options.a4
 	};
 }
 var author$project$Main$UrlChanged = function (a) {
@@ -4706,7 +4706,7 @@ var author$project$Main$UrlRequest = function (a) {
 };
 var author$project$Editor$CodeArea$Scroll = F2(
 	function (top, left) {
-		return {aR: left, a8: top};
+		return {aR: left, a9: top};
 	});
 var author$project$Editor$TextStyle$Hex = function (a) {
 	return {$: 1, a: a};
@@ -5555,7 +5555,7 @@ var elm$time$Time$Every = F2(
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$time$Time$State = F2(
 	function (taggers, processes) {
-		return {aX: processes, a6: taggers};
+		return {aY: processes, a7: taggers};
 	});
 var elm$time$Time$init = elm$core$Task$succeed(
 	A2(elm$time$Time$State, elm$core$Dict$empty, elm$core$Dict$empty));
@@ -5737,7 +5737,7 @@ var elm$time$Time$spawnHelp = F3(
 	});
 var elm$time$Time$onEffects = F3(
 	function (router, subs, _n0) {
-		var processes = _n0.aX;
+		var processes = _n0.aY;
 		var rightStep = F3(
 			function (_n6, id, _n7) {
 				var spawns = _n7.a;
@@ -5898,7 +5898,7 @@ var elm$time$Time$millisToPosix = elm$core$Basics$identity;
 var elm$time$Time$now = _Time_now(elm$time$Time$millisToPosix);
 var elm$time$Time$onSelfMsg = F3(
 	function (router, interval, state) {
-		var _n0 = A2(elm$core$Dict$get, interval, state.a6);
+		var _n0 = A2(elm$core$Dict$get, interval, state.a7);
 		if (_n0.$ === 1) {
 			return elm$core$Task$succeed(state);
 		} else {
@@ -5952,7 +5952,7 @@ var elm$browser$Browser$Events$MySub = F3(
 	});
 var elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {aU: pids, a5: subs};
+		return {aV: pids, a6: subs};
 	});
 var elm$browser$Browser$Events$init = elm$core$Task$succeed(
 	A2(elm$browser$Browser$Events$State, _List_Nil, elm$core$Dict$empty));
@@ -6082,7 +6082,7 @@ var elm$core$String$contains = _String_contains;
 var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {aJ: fragment, aM: host, bz: path, aV: port_, aY: protocol, aZ: query};
+		return {aJ: fragment, aM: host, aU: path, aW: port_, aZ: protocol, a_: query};
 	});
 var elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
@@ -6258,7 +6258,7 @@ var elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.aU,
+			state.aV,
 			elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, elm$core$Dict$empty, _List_Nil));
 		var deadPids = _n0.a;
@@ -6314,7 +6314,7 @@ var elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _n3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : elm$core$Maybe$Nothing;
 		};
-		var messages = A2(elm$core$List$filterMap, toMessage, state.a5);
+		var messages = A2(elm$core$List$filterMap, toMessage, state.a6);
 		return A2(
 			elm$core$Task$andThen,
 			function (_n1) {
@@ -6689,7 +6689,7 @@ var elm$core$Maybe$withDefault = F2(
 	});
 var elm$regex$Regex$Match = F4(
 	function (match, index, number, submatches) {
-		return {bn: index, br: match, bv: number, bH: submatches};
+		return {bo: index, bs: match, bw: number, bH: submatches};
 	});
 var elm$regex$Regex$find = _Regex_findAtMost(_Regex_infinity);
 var elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
@@ -6728,7 +6728,7 @@ var author$project$Lang$Game$getAttrs = F3(
 			elm$regex$Regex$never,
 			A2(
 				elm$regex$Regex$fromStringWith,
-				{bf: true, bt: false},
+				{bg: true, bu: false},
 				pattern));
 		var tryPair = function (decl) {
 			var comb = decl.b;
@@ -6743,7 +6743,7 @@ var author$project$Lang$Game$getAttrs = F3(
 					A2(
 						elm$core$List$map,
 						function ($) {
-							return $.br;
+							return $.bs;
 						},
 						A2(elm$regex$Regex$find, regex, comment))));
 		};
@@ -7381,7 +7381,7 @@ var elm$parser$Parser$Advanced$AddRight = F2(
 	});
 var elm$parser$Parser$Advanced$DeadEnd = F4(
 	function (row, col, problem, contextStack) {
-		return {aC: col, bh: contextStack, bB: problem, bE: row};
+		return {aC: col, bi: contextStack, bB: problem, bE: row};
 	});
 var elm$parser$Parser$Advanced$Empty = {$: 0};
 var elm$parser$Parser$Advanced$fromState = F2(
@@ -7445,7 +7445,7 @@ var elm$parser$Parser$Advanced$variable = function (i) {
 				false,
 				A2(elm$parser$Parser$Advanced$fromState, s, i.aH));
 		} else {
-			var s1 = _Utils_eq(firstOffset, -2) ? A7(elm$parser$Parser$Advanced$varHelp, i.bp, s.b + 1, s.bE + 1, 1, s.a, s.d, s.c) : A7(elm$parser$Parser$Advanced$varHelp, i.bp, firstOffset, s.bE, s.aC + 1, s.a, s.d, s.c);
+			var s1 = _Utils_eq(firstOffset, -2) ? A7(elm$parser$Parser$Advanced$varHelp, i.bq, s.b + 1, s.bE + 1, 1, s.a, s.d, s.c) : A7(elm$parser$Parser$Advanced$varHelp, i.bq, firstOffset, s.bE, s.aC + 1, s.a, s.d, s.c);
 			var name = A3(elm$core$String$slice, s.b, s1.b, s.a);
 			return A2(elm$core$Set$member, name, i.bC) ? A2(
 				elm$parser$Parser$Advanced$Bad,
@@ -7456,7 +7456,7 @@ var elm$parser$Parser$Advanced$variable = function (i) {
 };
 var elm$parser$Parser$variable = function (i) {
 	return elm$parser$Parser$Advanced$variable(
-		{aH: elm$parser$Parser$ExpectingVariable, bp: i.bp, bC: i.bC, bF: i.bF});
+		{aH: elm$parser$Parser$ExpectingVariable, bq: i.bq, bC: i.bC, bF: i.bF});
 };
 var author$project$Lang$Parse$char = F2(
 	function (pred, ctor) {
@@ -7468,7 +7468,7 @@ var author$project$Lang$Parse$char = F2(
 				elm$parser$Parser$getCol),
 			elm$parser$Parser$variable(
 				{
-					bp: elm$core$Basics$always(false),
+					bq: elm$core$Basics$always(false),
 					bC: elm$core$Set$empty,
 					bF: pred
 				}));
@@ -9017,7 +9017,7 @@ var author$project$Game$Game$makeCurr = F2(
 			author$project$Lang$Show$showTerm(term));
 		return {
 			aN: html,
-			a7: term,
+			a8: term,
 			i: elm$core$List$length(html),
 			Q: 0,
 			y: elm$core$Basics$floor(model.ag / 2)
@@ -9781,7 +9781,7 @@ var author$project$Game$Game$update = F2(
 							m,
 							{
 								s: elm$core$Maybe$Nothing,
-								m: A3(prepend, curr.a7, curr.y, m.m)
+								m: A3(prepend, curr.a8, curr.y, m.m)
 							});
 					}
 				} else {
@@ -9903,7 +9903,7 @@ var elm$url$Url$addPrefixed = F3(
 	});
 var elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _n0 = url.aY;
+		var _n0 = url.aZ;
 		if (!_n0) {
 			return 'http://';
 		} else {
@@ -9917,13 +9917,13 @@ var elm$url$Url$toString = function (url) {
 		A3(
 			elm$url$Url$addPrefixed,
 			'?',
-			url.aZ,
+			url.a_,
 			_Utils_ap(
 				A2(
 					elm$url$Url$addPort,
-					url.aV,
+					url.aW,
 					_Utils_ap(http, url.aM)),
-				url.bz)));
+				url.aU)));
 };
 var author$project$Main$resetUrl = function (_n0) {
 	var navkey = _n0.X;
@@ -9997,11 +9997,11 @@ var author$project$Main$update = F2(
 					if (!_n0.b) {
 						var url = _n0.a.a;
 						var _n3 = _n0.b;
-						var _n4 = _Utils_Tuple2(url.bz, url.aJ);
+						var _n4 = url.aJ;
 						_n4$4:
 						while (true) {
-							if (!_n4.b.$) {
-								switch (_n4.b.a) {
+							if (!_n4.$) {
+								switch (_n4.a) {
 									case 'SKIY':
 										return A2(
 											author$project$Main$thenPerform,
@@ -10241,7 +10241,7 @@ var author$project$Editor$CodeArea$viewCodeArea = function (model) {
 						A2(
 						elm$html$Html$Attributes$style,
 						'transform',
-						'translate(' + (elm$core$String$fromInt(-model.Z.aR) + ('px, ' + (elm$core$String$fromInt(-model.Z.a8) + 'px)')))),
+						'translate(' + (elm$core$String$fromInt(-model.Z.aR) + ('px, ' + (elm$core$String$fromInt(-model.Z.a9) + 'px)')))),
 						A2(elm$html$Html$Attributes$style, 'will-change', 'transform')
 					]),
 				_List_fromArray(
@@ -10254,9 +10254,9 @@ var author$project$Editor$CodeArea$viewCodeArea = function (model) {
 var elm_explorations$markdown$Markdown$defaultOptions = {
 	aE: elm$core$Maybe$Nothing,
 	aK: elm$core$Maybe$Just(
-		{be: false, bJ: false}),
-	a0: true,
-	a3: false
+		{bf: false, bJ: false}),
+	a1: true,
+	a4: false
 };
 var elm$core$Maybe$isJust = function (maybe) {
 	if (!maybe.$) {
@@ -10524,7 +10524,7 @@ var author$project$Misc$disableContextMenu = function (msg) {
 		A2(
 			elm$json$Json$Decode$map,
 			elm$core$Basics$always(
-				{bs: msg, bA: true, bG: true}),
+				{bt: msg, bA: true, bG: true}),
 			elm$json$Json$Decode$succeed(msg)));
 };
 var author$project$Editor$View$horzDiv = elm$html$Html$div(
@@ -11046,7 +11046,7 @@ var author$project$Main$view = function (_n0) {
 	var editor = _n0.t;
 	var game = _n0.G;
 	return {
-		bd: _List_fromArray(
+		be: _List_fromArray(
 			[
 				function () {
 				if (!scope) {
@@ -11067,6 +11067,6 @@ var author$project$Main$view = function (_n0) {
 };
 var elm$browser$Browser$application = _Browser_application;
 var author$project$Main$main = elm$browser$Browser$application(
-	{bo: author$project$Main$init, bw: author$project$Main$UrlChanged, bx: author$project$Main$UrlRequest, bI: author$project$Main$subscribe, bL: author$project$Main$update, bN: author$project$Main$view});
+	{bp: author$project$Main$init, bx: author$project$Main$UrlChanged, by: author$project$Main$UrlRequest, bI: author$project$Main$subscribe, bL: author$project$Main$update, bN: author$project$Main$view});
 _Platform_export({'Main':{'init':author$project$Main$main(
 	elm$json$Json$Decode$succeed(0))(0)}});}(this));

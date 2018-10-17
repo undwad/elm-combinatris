@@ -118,19 +118,19 @@ update msg model =
     (EditorMsg msg1, Editor) -> Editor.update msg1 model.editor |> mapEditor model
     (GameMsg   msg1, Game)   -> Game.update   msg1 model.game   |> mapGame model
     (UrlChanged url, Editor) ->
-      case (url.path, url.fragment) of
-        (_, Just "SKIY")        -> model |> perform (setLangText exampleSKIY)  |> thenPerform (resetUrl model)
-        (_, Just "BCKWY")       -> model |> perform (setLangText exampleBCKWY) |> thenPerform (resetUrl model)
-        (_, Just "NEW")         -> model |> perform (setLangText " ")          |> thenPerform (resetUrl model)
-        (_, Just "game")       -> if Editor.isLangStyled model.editor then startGame model
-                                                                       else model |> perform (resetUrl model)
-        _                       -> model |> perform Cmd.none
-    (UrlChanged _, Game)        -> { model | scope = Editor } |> perform (resetUrl model)
+      case url.fragment of
+        Just "SKIY"          -> model |> perform (setLangText exampleSKIY)  |> thenPerform (resetUrl model)
+        Just "BCKWY"         -> model |> perform (setLangText exampleBCKWY) |> thenPerform (resetUrl model)
+        Just "NEW"           -> model |> perform (setLangText " ")          |> thenPerform (resetUrl model)
+        Just "game"          -> if Editor.isLangStyled model.editor then startGame model
+                                                                    else model |> perform (resetUrl model)
+        _                    -> model |> perform Cmd.none
+    (UrlChanged _, Game)     -> { model | scope = Editor } |> perform (resetUrl model)
     (UrlRequest req, _) ->
       case req of
-        Internal url            -> model |> perform (Nav.pushUrl model.navkey <| Url.toString <| url)
-        External url            -> model |> perform (Nav.load url)
-    _                           -> model |> perform Cmd.none
+        Internal url         -> model |> perform (Nav.pushUrl model.navkey <| Url.toString <| url)
+        External url         -> model |> perform (Nav.load url)
+    _                        -> model |> perform Cmd.none
 
 subscribe : Model -> Sub Msg
 subscribe { scope, editor, game } =
