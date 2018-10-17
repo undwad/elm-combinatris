@@ -14,27 +14,19 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Combinatris in Elm</title>
 
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="button.css">
 </head>
 <body>
-    <div id="elm"></div>
+    <div id="elm"><h2>Loading...</h2></div>
+    <script src="main.js"></script>
     <script>
       const div = document.getElementById("elm");
       const app  = Elm.Main.init({ node: div });
-
-      const getClientSize = () =>
-      {
-        const width  = Math.min(document.documentElement.clientWidth, window.innerWidth || Number.MAX_VALUE);
-        const height = Math.min(document.documentElement.clientHeight, window.innerHeight || Number.MAX_VALUE);
-        app.ports.clientSize.send({ width, height });
-      };
-
-      getClientSize();
-
-      document.body.onresize = getClientSize;
-
+      app.ports.writeCache.subscribe(([key, value]) => localStorage.setItem(key, value));
+      app.ports.readCache.subscribe(([key, callback]) => app.ports[callback].send(localStorage.getItem(key) || ""));
     </script>
 </body>
 </html>

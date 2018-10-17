@@ -1,2 +1,2 @@
-elm reactor
+elm.exe reactor
 pause
