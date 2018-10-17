@@ -122,10 +122,10 @@ update msg model =
         (_, Just "SKIY")        -> model |> perform (setLangText exampleSKIY)  |> thenPerform (resetUrl model)
         (_, Just "BCKWY")       -> model |> perform (setLangText exampleBCKWY) |> thenPerform (resetUrl model)
         (_, Just "NEW")         -> model |> perform (setLangText " ")          |> thenPerform (resetUrl model)
-        ("/game", _)            -> if Editor.isLangStyled model.editor then startGame model
+        (_, Just "game")       -> if Editor.isLangStyled model.editor then startGame model
                                                                        else model |> perform (resetUrl model)
         _                       -> model |> perform Cmd.none
-    (UrlChanged _, Game)        -> { model | scope = Editor } |> perform Cmd.none
+    (UrlChanged _, Game)        -> { model | scope = Editor } |> perform (resetUrl model)
     (UrlRequest req, _) ->
       case req of
         Internal url            -> model |> perform (Nav.pushUrl model.navkey <| Url.toString <| url)

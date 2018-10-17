@@ -82,7 +82,7 @@ reduceButton model =
       [ text <| "Reduce" ]
 
 playButton : Model -> Html Msg
-playButton model = a [ href "/game" ] [ text "Play Combinatris" ]
+playButton model = a [ href "#game" ] [ text "Play Combinatris" ]
 
 view : Model -> Html Msg
 view model =

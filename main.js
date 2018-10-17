@@ -9998,62 +9998,52 @@ var author$project$Main$update = F2(
 						var url = _n0.a.a;
 						var _n3 = _n0.b;
 						var _n4 = _Utils_Tuple2(url.bz, url.aJ);
-						_n4$3:
+						_n4$4:
 						while (true) {
-							_n4$4:
-							while (true) {
-								if (!_n4.b.$) {
-									switch (_n4.b.a) {
-										case 'SKIY':
-											return A2(
-												author$project$Main$thenPerform,
-												author$project$Main$resetUrl(model),
-												A2(
-													author$project$Misc$perform,
-													author$project$Main$setLangText(author$project$Editor$Data$exampleSKIY),
-													model));
-										case 'BCKWY':
-											return A2(
-												author$project$Main$thenPerform,
-												author$project$Main$resetUrl(model),
-												A2(
-													author$project$Misc$perform,
-													author$project$Main$setLangText(author$project$Editor$Data$exampleBCKWY),
-													model));
-										case 'NEW':
-											return A2(
-												author$project$Main$thenPerform,
-												author$project$Main$resetUrl(model),
-												A2(
-													author$project$Misc$perform,
-													author$project$Main$setLangText(' '),
-													model));
-										default:
-											if (_n4.a === '/game') {
-												break _n4$3;
-											} else {
-												break _n4$4;
-											}
-									}
-								} else {
-									if (_n4.a === '/game') {
-										break _n4$3;
-									} else {
+							if (!_n4.b.$) {
+								switch (_n4.b.a) {
+									case 'SKIY':
+										return A2(
+											author$project$Main$thenPerform,
+											author$project$Main$resetUrl(model),
+											A2(
+												author$project$Misc$perform,
+												author$project$Main$setLangText(author$project$Editor$Data$exampleSKIY),
+												model));
+									case 'BCKWY':
+										return A2(
+											author$project$Main$thenPerform,
+											author$project$Main$resetUrl(model),
+											A2(
+												author$project$Misc$perform,
+												author$project$Main$setLangText(author$project$Editor$Data$exampleBCKWY),
+												model));
+									case 'NEW':
+										return A2(
+											author$project$Main$thenPerform,
+											author$project$Main$resetUrl(model),
+											A2(
+												author$project$Misc$perform,
+												author$project$Main$setLangText(' '),
+												model));
+									case 'game':
+										return author$project$Editor$Utils$isLangStyled(model.t) ? author$project$Main$startGame(model) : A2(
+											author$project$Misc$perform,
+											author$project$Main$resetUrl(model),
+											model);
+									default:
 										break _n4$4;
-									}
 								}
+							} else {
+								break _n4$4;
 							}
-							return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, model);
 						}
-						return author$project$Editor$Utils$isLangStyled(model.t) ? author$project$Main$startGame(model) : A2(
-							author$project$Misc$perform,
-							author$project$Main$resetUrl(model),
-							model);
+						return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, model);
 					} else {
 						var _n5 = _n0.b;
 						return A2(
 							author$project$Misc$perform,
-							elm$core$Platform$Cmd$none,
+							author$project$Main$resetUrl(model),
 							_Utils_update(
 								model,
 								{w: 0}));
@@ -10562,7 +10552,7 @@ var author$project$Editor$View$playButton = function (model) {
 		elm$html$Html$a,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$href('/game')
+				elm$html$Html$Attributes$href('#game')
 			]),
 		_List_fromArray(
 			[
