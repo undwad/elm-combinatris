@@ -121,7 +121,7 @@ update msg model =
       case url.fragment of
         Just "SKIY"          -> model |> perform (setLangText exampleSKIY)  |> thenPerform (resetUrl model)
         Just "BCKWY"         -> model |> perform (setLangText exampleBCKWY) |> thenPerform (resetUrl model)
-        Just "NEW"           -> model |> perform (setLangText " ")          |> thenPerform (resetUrl model)
+        Just "NEW"           -> model |> perform (setLangText "\u{200B}")   |> thenPerform (resetUrl model)
         Just "game"          -> if Editor.isLangStyled model.editor then startGame model
                                                                     else model |> perform (resetUrl model)
         _                    -> model |> perform Cmd.none

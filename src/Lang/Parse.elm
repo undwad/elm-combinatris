@@ -9,7 +9,7 @@ import Misc exposing (..)
 -- import Debug exposing (toString, log)
 
 spaces : Parser ()
-spaces = chompWhile (\c -> c == ' ' || c == '\t')
+spaces = chompWhile (\c -> c == ' ' || c == '\t' || c == '\u{200B}')
 
 char : (Char -> Bool) -> (Int -> String -> a) -> Parser a
 char pred ctor =
@@ -132,6 +132,7 @@ lang =
         , symbol "\t"
         , symbol "\n"
         , symbol "\r"
+        , symbol "\u{200B}"
         ]
     appendDecl list =
       succeed (loopAppend list)

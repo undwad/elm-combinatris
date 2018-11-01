@@ -7539,7 +7539,7 @@ var elm$parser$Parser$Advanced$chompWhile = function (isGood) {
 var elm$parser$Parser$chompWhile = elm$parser$Parser$Advanced$chompWhile;
 var author$project$Lang$Parse$spaces = elm$parser$Parser$chompWhile(
 	function (c) {
-		return (c === ' ') || (c === '\t');
+		return (c === ' ') || ((c === '\t') || (c === '\u200b'));
 	});
 var author$project$Lang$Parse$isVar = function (ch) {
 	return ('_' === ch) || elm$core$Char$isLower(ch);
@@ -8227,7 +8227,8 @@ var author$project$Lang$Parse$lang = function () {
 						elm$parser$Parser$symbol(' '),
 						elm$parser$Parser$symbol('\t'),
 						elm$parser$Parser$symbol('\n'),
-						elm$parser$Parser$symbol('\r')
+						elm$parser$Parser$symbol('\r'),
+						elm$parser$Parser$symbol('\u200b')
 					])));
 	};
 	var appendDecl = function (list) {
@@ -10024,7 +10025,7 @@ var author$project$Main$update = F2(
 											author$project$Main$resetUrl(model),
 											A2(
 												author$project$Misc$perform,
-												author$project$Main$setLangText(' '),
+												author$project$Main$setLangText('\u200b'),
 												model));
 									case 'game':
 										return author$project$Editor$Utils$isLangStyled(model.t) ? author$project$Main$startGame(model) : A2(
