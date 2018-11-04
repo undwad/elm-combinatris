@@ -114,4 +114,4 @@ getWeights lang =
     scopes = List.range 2 maxLen |> List.map (pair scopeWeight << makeScope)
   in
     if List.length weights > 0 then weights ++ scopes
-                                    else []
+                               else []
