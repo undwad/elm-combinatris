@@ -3949,7 +3949,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.bL,
 		impl.bI,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl._ && impl._(sendToApp)
+			var divertHrefToApp = impl.Z && impl.Z(sendToApp)
 			var view = impl.bN;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4019,7 +4019,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		_: function(sendToApp)
+		Z: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4213,7 +4213,7 @@ function _Browser_getViewport()
 			Q: _Browser_window.pageXOffset,
 			y: _Browser_window.pageYOffset,
 			i: _Browser_doc.documentElement.clientWidth,
-			ag: _Browser_doc.documentElement.clientHeight
+			af: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4224,7 +4224,7 @@ function _Browser_getScene()
 	var elem = _Browser_doc.documentElement;
 	return {
 		i: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		ag: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		af: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4249,13 +4249,13 @@ function _Browser_getViewportOf(id)
 		return {
 			a2: {
 				i: node.scrollWidth,
-				ag: node.scrollHeight
+				af: node.scrollHeight
 			},
 			bb: {
 				Q: node.scrollLeft,
 				y: node.scrollTop,
 				i: node.clientWidth,
-				ag: node.clientHeight
+				af: node.clientHeight
 			}
 		};
 	});
@@ -4290,13 +4290,13 @@ function _Browser_getElement(id)
 				Q: x,
 				y: y,
 				i: _Browser_doc.documentElement.clientWidth,
-				ag: _Browser_doc.documentElement.clientHeight
+				af: _Browser_doc.documentElement.clientHeight
 			},
 			bj: {
 				Q: x + rect.left,
 				y: y + rect.top,
 				i: rect.width,
-				ag: rect.height
+				af: rect.height
 			}
 		};
 	});
@@ -4714,7 +4714,7 @@ var author$project$Editor$TextStyle$Hex = function (a) {
 var author$project$Editor$TextStyle$DefaultColor = {$: 0};
 var elm$core$Basics$False = 1;
 var author$project$Editor$TextStyle$backgroundColor = function (background) {
-	return {S: background, I: false, J: false, V: false, ac: author$project$Editor$TextStyle$DefaultColor};
+	return {S: background, I: false, J: false, V: false, ab: author$project$Editor$TextStyle$DefaultColor};
 };
 var elm$core$Basics$True = 0;
 var author$project$Editor$TextStyle$italic = function (style) {
@@ -4723,7 +4723,7 @@ var author$project$Editor$TextStyle$italic = function (style) {
 		{J: true});
 };
 var author$project$Editor$TextStyle$textColor = function (text) {
-	return {S: author$project$Editor$TextStyle$DefaultColor, I: false, J: false, V: false, ac: text};
+	return {S: author$project$Editor$TextStyle$DefaultColor, I: false, J: false, V: false, ab: text};
 };
 var elm$core$Basics$apL = F2(
 	function (f, x) {
@@ -4997,12 +4997,12 @@ var author$project$Editor$CodeArea$init = function (_n0) {
 	return {
 		U: '',
 		E: '',
-		ah: -1,
+		ag: -1,
 		ao: 10,
 		aj: true,
 		at: false,
 		ak: '',
-		Z: A2(author$project$Editor$CodeArea$Scroll, 0, 0),
+		Y: A2(author$project$Editor$CodeArea$Scroll, 0, 0),
 		au: _List_Nil,
 		al: author$project$Editor$CodeArea$defaultStyles
 	};
@@ -5427,17 +5427,17 @@ var author$project$Editor$Editor$init = function (_n0) {
 				{U: 'langarea', ao: 10, aj: true, ak: author$project$Editor$Data$placeholder}),
 			n: elm$core$Result$Ok(author$project$Lang$Lang$emptyLang),
 			ai: elm$core$Maybe$Nothing,
-			aa: '1',
+			_: '1',
 			av: _List_Nil
 		});
 };
 var author$project$Game$Types$Row = F5(
 	function (expr, html, width, score, canReduce) {
-		return {aA: canReduce, u: expr, aN: html, Y: score, i: width};
+		return {aA: canReduce, u: expr, aN: html, X: score, i: width};
 	});
 var author$project$Game$Game$makeRow = A5(author$project$Game$Types$Row, _List_Nil, _List_Nil, 0, 0, false);
 var author$project$Game$Types$Playing = 0;
-var author$project$Game$Types$config = {ag: 5, H: 700.0, i: 30};
+var author$project$Game$Types$config = {af: 5, H: 700.0, i: 30};
 var elm$core$Array$repeat = F2(
 	function (n, e) {
 		return A2(
@@ -5461,23 +5461,23 @@ var author$project$Game$Game$init = F3(
 			{
 				ay: A2(ohanhi$keyboard$Keyboard$Arrows$Arrows, 0, 0),
 				s: elm$core$Maybe$Nothing,
-				ag: author$project$Game$Types$config.ag,
+				af: author$project$Game$Types$config.af,
 				H: author$project$Game$Types$config.H,
 				an: _List_Nil,
 				K: lang,
 				ar: elm$core$Maybe$Nothing,
-				m: A2(elm$core$Array$repeat, author$project$Game$Types$config.ag, author$project$Game$Game$makeRow),
-				Y: 0,
+				m: A2(elm$core$Array$repeat, author$project$Game$Types$config.af, author$project$Game$Game$makeRow),
+				X: 0,
 				O: 0,
 				am: {
 					U: 'dummyarea',
 					E: '',
-					ah: -1,
+					ag: -1,
 					ao: 1,
 					aj: false,
 					at: true,
 					ak: '',
-					Z: A2(author$project$Editor$CodeArea$Scroll, 0, 0),
+					Y: A2(author$project$Editor$CodeArea$Scroll, 0, 0),
 					au: _List_Nil,
 					al: styles
 				},
@@ -5510,7 +5510,7 @@ var author$project$Main$init = F3(
 		var game = _n2.a;
 		return A2(
 			author$project$Main$mapEditor,
-			{t: editor, G: game, X: key, aq: url, w: 0},
+			{t: editor, G: game, ah: key, aq: url, w: 0},
 			_Utils_Tuple2(editor, msg));
 	});
 var author$project$Editor$CodeArea$SetText = function (a) {
@@ -6555,7 +6555,7 @@ var author$project$Editor$CodeArea$update = F2(
 			var scroll = msg.a;
 			return _Utils_update(
 				model,
-				{Z: scroll});
+				{Y: scroll});
 		}
 	});
 var author$project$Editor$Data$slots = A2(
@@ -8706,7 +8706,7 @@ var author$project$Editor$Editor$update = F2(
 				return _Utils_update(
 					m,
 					{
-						ah: getErrorLine(res)
+						ag: getErrorLine(res)
 					});
 			});
 		var highlightExpr1 = function (m) {
@@ -8736,7 +8736,7 @@ var author$project$Editor$Editor$update = F2(
 				return _Utils_update(
 					m,
 					{
-						aa: A2(elm$core$List$member, slot, author$project$Editor$Data$slots) ? slot : m.aa
+						_: A2(elm$core$List$member, slot, author$project$Editor$Data$slots) ? slot : m._
 					});
 			});
 		var buildWeights1 = function (m) {
@@ -8803,7 +8803,7 @@ var author$project$Editor$Editor$update = F2(
 						A2(elm$core$Basics$composeL, author$project$Misc$perform, elm$core$Platform$Cmd$batch),
 						_List_fromArray(
 							[
-								A2(author$project$Editor$Port$writeSlot, model.aa, code),
+								A2(author$project$Editor$Port$writeSlot, model._, code),
 								author$project$Misc$goto(author$project$Editor$Types$RandomTerm)
 							]),
 						A2(
@@ -8852,7 +8852,7 @@ var author$project$Editor$Editor$update = F2(
 			case 6:
 				return A2(
 					author$project$Misc$perform,
-					author$project$Editor$Port$readSlot(model.aa),
+					author$project$Editor$Port$readSlot(model._),
 					model);
 			default:
 				var slot = msg.a;
@@ -9021,7 +9021,7 @@ var author$project$Game$Game$makeCurr = F2(
 			a8: term,
 			i: elm$core$List$length(html),
 			Q: 0,
-			y: elm$core$Basics$floor(model.ag / 2)
+			y: elm$core$Basics$floor(model.af / 2)
 		};
 	});
 var author$project$Game$Types$Next = function (a) {
@@ -9085,14 +9085,14 @@ var author$project$Game$Game$updateRow = F2(
 				{au: strong}),
 			code);
 		var width = elm$core$List$length(html);
-		var score = row.Y + (A2(elm$core$Basics$max, 0, row.i - width) * author$project$Game$Types$scoreFactor(model));
+		var score = row.X + (A2(elm$core$Basics$max, 0, row.i - width) * author$project$Game$Types$scoreFactor(model));
 		return _Utils_update(
 			row,
 			{
 				aA: A2(elm$core$Basics$composeL, elm$core$Basics$not, elm$core$List$isEmpty)(strong),
 				u: expr,
 				aN: html,
-				Y: score,
+				X: score,
 				i: width
 			});
 	});
@@ -9681,7 +9681,7 @@ var author$project$Game$Game$update = F2(
 				elm$core$List$sum,
 				elm$core$List$map(
 					function ($) {
-						return $.Y;
+						return $.X;
 					})),
 			elm$core$Array$toList);
 		var reduce = elm$core$Array$map(
@@ -9853,7 +9853,7 @@ var author$project$Game$Game$update = F2(
 					model1,
 					{
 						H: model.H - ((model.H / author$project$Game$Types$scoreFactor(model)) / 1000),
-						Y: sumScores(model1.m),
+						X: sumScores(model1.m),
 						O: canPlay(model1.m) ? 0 : 2
 					});
 				var _n1 = _Utils_Tuple2(model2.s, model2.O);
@@ -9881,7 +9881,7 @@ var author$project$Main$mapGame = F2(
 				model,
 				{G: game, w: 1}));
 	});
-var elm$browser$Browser$Navigation$replaceUrl = _Browser_replaceUrl;
+var elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var elm$url$Url$addPort = F2(
 	function (maybePort, starter) {
 		if (maybePort.$ === 1) {
@@ -9926,8 +9926,17 @@ var elm$url$Url$toString = function (url) {
 					_Utils_ap(http, url.aM)),
 				url.aU)));
 };
+var author$project$Main$pushUrl = F2(
+	function (_n0, url) {
+		var navkey = _n0.ah;
+		return A2(
+			elm$browser$Browser$Navigation$pushUrl,
+			navkey,
+			elm$url$Url$toString(url));
+	});
+var elm$browser$Browser$Navigation$replaceUrl = _Browser_replaceUrl;
 var author$project$Main$resetUrl = function (_n0) {
-	var navkey = _n0.X;
+	var navkey = _n0.ah;
 	var navurl = _n0.aq;
 	return A2(
 		elm$browser$Browser$Navigation$replaceUrl,
@@ -9965,7 +9974,6 @@ var author$project$Main$thenPerform = F2(
 				_List_fromArray(
 					[msg, msg1])));
 	});
-var elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var author$project$Main$update = F2(
 	function (msg, model) {
 		var _n0 = _Utils_Tuple2(msg, model.w);
@@ -10055,10 +10063,7 @@ var author$project$Main$update = F2(
 						var url = req.a;
 						return A2(
 							author$project$Misc$perform,
-							A2(
-								elm$browser$Browser$Navigation$pushUrl,
-								model.X,
-								elm$url$Url$toString(url)),
+							A2(author$project$Main$pushUrl, model, url),
 							model);
 					} else {
 						var url = req.a;
@@ -10100,7 +10105,7 @@ var author$project$Editor$CodeArea$viewCode = function (model) {
 								_Utils_Tuple2('codearea-line', model.aj),
 								_Utils_Tuple2(
 								'codearea-highlight',
-								(model.ah >= 0) && _Utils_eq(model.ah, 1 + index))
+								(model.ag >= 0) && _Utils_eq(model.ag, 1 + index))
 							])),
 						A2(
 						elm$html$Html$Attributes$attribute,
@@ -10242,7 +10247,7 @@ var author$project$Editor$CodeArea$viewCodeArea = function (model) {
 						A2(
 						elm$html$Html$Attributes$style,
 						'transform',
-						'translate(' + (elm$core$String$fromInt(-model.Z.aR) + ('px, ' + (elm$core$String$fromInt(-model.Z.a9) + 'px)')))),
+						'translate(' + (elm$core$String$fromInt(-model.Y.aR) + ('px, ' + (elm$core$String$fromInt(-model.Y.a9) + 'px)')))),
 						A2(elm$html$Html$Attributes$style, 'will-change', 'transform')
 					]),
 				_List_fromArray(
@@ -10300,7 +10305,7 @@ var author$project$Editor$TextStyle$styleToCss = function (_n0) {
 	var isBold = _n0.I;
 	var isItalic = _n0.J;
 	var isUnderline = _n0.V;
-	var text = _n0.ac;
+	var text = _n0.ab;
 	var background = _n0.S;
 	return elm$core$String$concat(
 		_List_fromArray(
@@ -10642,7 +10647,7 @@ var author$project$Editor$View$slotButton = F2(
 					elm$html$Html$Events$onClick(
 					author$project$Editor$Types$ChangeSlot(slot)),
 					elm$html$Html$Attributes$class(
-					(_Utils_eq(slot, model.aa) ? 'bttn-simple' : 'bttn-bordered') + ' bttn-md bttn-primary'),
+					(_Utils_eq(slot, model._) ? 'bttn-simple' : 'bttn-bordered') + ' bttn-md bttn-primary'),
 					A2(elm$html$Html$Attributes$style, 'marginRight', '10px'),
 					A2(elm$html$Html$Attributes$style, 'marginBottom', '10px')
 				]),
@@ -10930,7 +10935,7 @@ var author$project$Game$View$showInfo = function (model) {
 										A2(
 										author$project$Game$View$coloredText,
 										'#3993d0',
-										elm$core$String$fromInt(model.Y))
+										elm$core$String$fromInt(model.X))
 									]))
 							]))
 					]))

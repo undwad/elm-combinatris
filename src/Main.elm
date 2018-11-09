@@ -128,7 +128,7 @@ update msg model =
     (UrlChanged _, Game)     -> { model | scope = Editor } |> perform (resetUrl model)
     (UrlRequest req, _) ->
       case req of
-        Internal url         -> model |> perform (Nav.pushUrl model.navkey <| Url.toString <| url)
+        Internal url         -> model |> perform (pushUrl model url)
         External url         -> model |> perform (Nav.load url)
     _                        -> model |> perform Cmd.none
 
