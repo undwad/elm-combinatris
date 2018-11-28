@@ -4,7 +4,7 @@ import Browser.Events
 import Html
 import List
 import Array exposing (Array)
-import String
+import String exposing (fromInt, fromFloat)
 import Random
 import Tuple
 import Task
@@ -13,6 +13,7 @@ import Html exposing (Html)
 import Maybe exposing (Maybe, withDefault)
 import Time exposing (Posix)
 import Json.Decode as Decode
+import Dict exposing (Dict)
 import Browser.Dom exposing (Viewport)
 import Keyboard exposing (Key)
 import Keyboard.Arrows as Arrows exposing (Arrows)
@@ -34,12 +35,20 @@ makeCurr : Model -> Term -> Curr
 makeCurr model term =
   let
     html = showTerm term |> viewString model.theme
+    decl =
+      case term of
+        Comb _ comb   ->
+          case Dict.get comb model.lang of
+            Just decl1 -> showDecl decl1 |> viewString model.theme
+            _         -> []
+        _             -> []
   in
     { term  = term
     , html  = html
     , width = List.length html
     , x     = 0
     , y     = floor (toFloat model.height / 2)
+    , decl  = decl
     }
 
 makeRow : Row

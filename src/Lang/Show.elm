@@ -1,8 +1,8 @@
-module Lang.Show exposing (showTerm, showExpr, showError)
+module Lang.Show exposing (showTerm, showExpr, showDecl, showError)
 
 import Parser exposing (..)
 import Dict
-import String exposing (fromInt, fromFloat, fromChar)
+import String exposing (fromInt, fromFloat, fromChar, join)
 import Lang.Types exposing (..)
 
 -- import Debug exposing (toString)
@@ -23,6 +23,9 @@ showTerm term =
 
 showExpr : Expr -> String
 showExpr = showChars showTerm ""
+
+showDecl : Decl -> String
+showDecl (Decl _ comb args expr _) = comb ++ join "" args ++ " = " ++ showExpr expr
 
 showEscapeSymbols : String -> String
 showEscapeSymbols = String.replace "\n" "\\n" >> String.replace "\r" "\\r"

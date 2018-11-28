@@ -23,6 +23,9 @@ calcFontSize model = style "font-size" <| "calc(100vw / " ++ fromFloat (toFloat 
 viewString : Theme -> String -> List (Html Msg)
 viewString theme = CodeArea.viewString theme >> (List.map <| Html.map <| always Idle)
 
+padRight : Int -> List (Html Msg) -> List (Html Msg)
+padRight n html = html ++ List.repeat (n - List.length html) (text " ")
+
 showRow : Model -> Int -> Row -> Html Msg
 showRow model y row =
   let
@@ -124,11 +127,13 @@ showInfo model =
     ]
     [ tr []
       [ td [] [ coloredText "#bdc3c7" "Next: " ]
-      , td [] (Maybe.map .html model.next |> Maybe.withDefault [])
+      , td [] (Maybe.map .html model.next |> Maybe.withDefault [] |> padRight 16)
+      , td [] [ coloredText "#bdc3c7" "Score: " ]
+      , td [] [ coloredText "#3993d0" (fromInt model.score) ]
       ]
     , tr []
-      [ td [] [ coloredText "#bdc3c7" "Score: " ]
-      , td [] [ coloredText "#3993d0" (fromInt model.score) ]
+      [ td [] [ coloredText "#bdc3c7" "Rule: " ]
+      , td [] (Maybe.map .decl model.curr |> Maybe.withDefault [] |> padRight 16)
       ]
     ]
   ]

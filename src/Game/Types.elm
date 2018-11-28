@@ -33,6 +33,7 @@ type alias Curr =
   , width : Int
   , x     : Int
   , y     : Int
+  , decl  : List (Html Msg)
   }
 
 type alias Row =
