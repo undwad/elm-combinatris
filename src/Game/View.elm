@@ -127,13 +127,13 @@ showInfo model =
     ]
     [ tr []
       [ td [] [ coloredText "#bdc3c7" "Next: " ]
-      , td [] (Maybe.map .html model.next |> Maybe.withDefault [] |> padRight 16)
+      , td [] (Maybe.map .html model.next |> Maybe.withDefault [] |> padRight 12)
       , td [] [ coloredText "#bdc3c7" "Score: " ]
       , td [] [ coloredText "#3993d0" (fromInt model.score) ]
       ]
     , tr []
       [ td [] [ coloredText "#bdc3c7" "Rule: " ]
-      , td [] (Maybe.map .decl model.curr |> Maybe.withDefault [] |> padRight 16)
+      , td [] (Maybe.map .decl model.curr |> Maybe.withDefault [] |> padRight 12)
       ]
     ]
   ]

@@ -10956,7 +10956,7 @@ var author$project$Game$View$showInfo = function (model) {
 								_List_Nil,
 								A2(
 									author$project$Game$View$padRight,
-									16,
+									12,
 									A2(
 										elm$core$Maybe$withDefault,
 										_List_Nil,
@@ -11001,7 +11001,7 @@ var author$project$Game$View$showInfo = function (model) {
 								_List_Nil,
 								A2(
 									author$project$Game$View$padRight,
-									16,
+									12,
 									A2(
 										elm$core$Maybe$withDefault,
 										_List_Nil,
