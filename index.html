@@ -28,7 +28,7 @@
       app.ports.writeCache.subscribe(([key, value]) => localStorage.setItem(key, value));
       app.ports.readCache.subscribe(([key, callback]) => app.ports[callback].send(localStorage.getItem(key) || ""));
     </script>
-    <script>
+    <!-- <script>
       var doubleTouchStartTimestamp = 0;
       document.addEventListener("touchstart", event =>
       {
@@ -36,6 +36,6 @@
         if (doubleTouchStartTimestamp + 500 > now) event.preventDefault();
         doubleTouchStartTimestamp = now;
       });
-    </script>
+    </script> -->
 </body>
 </html>

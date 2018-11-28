@@ -1,2 +1,0 @@
-elm.exe reactor
-pause

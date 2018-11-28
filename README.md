@@ -5,7 +5,7 @@ The game contains combinatory logic language editor, where one can create his ow
 
 Read more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).
 
-[**Try Combinatris in Elm**](https://av.sparadon.com:9009/files/combinatris/).
+[**Try Combinatris in Elm**](https://sparadon.com/combinatris/).
 
 
 
