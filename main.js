@@ -5007,7 +5007,7 @@ var author$project$Editor$CodeArea$init = function (_n0) {
 		styles: author$project$Editor$CodeArea$defaultStyles
 	};
 };
-var author$project$Editor$Data$placeholder = '\r\n[**Start composing**](#NEW) your own set of combinators.\r\n\r\nOr select one of the well-known computational systems:\r\n\r\n  [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).\r\n\r\nRead more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).\r\n\r\nAnnotating combinators with color and optional weight (see examples above) allows to play the [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html) game.\r\n\r\nUnlike the original game, expressions don\'t reduce completely at once, but step by step, so that you could stop infinite loops.\r\nScoring also is slightly different but intuitive.\r\n\r\nUse arrow keys or screen buttons to play the game.\r\n\r\nThe project is coded in [**Elm**](http://elm-lang.org/) language.\r\n\r\nThe project is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).\r\n';
+var author$project$Editor$Data$placeholder = '\r\n[**Start composing**](#NEW) your own set of combinators.\r\n\r\nOr select one of the well-known computational systems:\r\n\r\n  [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).\r\n\r\nOr try playing [**this**](#GAME1) well-balanced example.\r\n\r\nRead more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).\r\n\r\nAnnotating combinators with color and optional weight (see examples above) allows to play the [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html) game.\r\n\r\nUnlike the original game, expressions don\'t reduce completely at once, but step by step, so that you could stop infinite loops.\r\nScoring also is slightly different but intuitive.\r\n\r\nUse arrow keys or screen buttons to play the game.\r\n\r\nThe project is coded in [**Elm**](http://elm-lang.org/) language.\r\n\r\nThe project is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).\r\n';
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -6410,6 +6410,7 @@ var author$project$Main$subscribe = function (_n0) {
 };
 var elm$core$String$trim = _String_trim;
 var author$project$Editor$Data$exampleBCKWY = elm$core$String$trim('\r\nBxyz = x(yz) -- #FF851B %1\r\nCxyz = xzy   -- #B10DC9 %1\r\nKxy  = x     -- #85144b %3\r\nWxy  = xyy   -- #39CCCC %1\r\nYx   = x(Yx) -- #f00    %1\r\n\r\nS = B(BW)(BBC)\r\nI = SKK\r\n');
+var author$project$Editor$Data$exampleGAME1 = elm$core$String$trim('\r\nBxyz = x(yz) -- #FF851B %3\r\nCxyz = xzy   -- #B10DC9 %3\r\nKxy  = x     -- #85144b %7\r\nWxy  = xyy   -- #39CCCC %2\r\nYx   = (Yx)x -- #f00    %2\r\n\r\nS = B(BW)(BBC)\r\nI = SKK      -- #00f    %2\r\n');
 var author$project$Editor$Data$exampleSKIY = elm$core$String$trim('\r\nIx   = x      -- #0074D9 %3\r\nKxy  = x      -- #85144b %2\r\nSxyz = xz(yz) -- #3D9970 %2\r\nYx   = x(Yx)  -- #f00    %2\r\n\r\nB = S(KS)K\r\nC = S(BBS)(KK)\r\nW = SS(SK)\r\n');
 var elm$core$Basics$composeR = F3(
 	function (f, g, x) {
@@ -10054,10 +10055,18 @@ var author$project$Main$update = F2(
 						var url = _n0.a.a;
 						var _n3 = _n0.b;
 						var _n4 = url.fragment;
-						_n4$4:
+						_n4$5:
 						while (true) {
 							if (_n4.$ === 'Just') {
 								switch (_n4.a) {
+									case 'GAME1':
+										return A2(
+											author$project$Main$thenPerform,
+											author$project$Main$resetUrl(model),
+											A2(
+												author$project$Misc$perform,
+												author$project$Main$setLangText(author$project$Editor$Data$exampleGAME1),
+												model));
 									case 'SKIY':
 										return A2(
 											author$project$Main$thenPerform,
@@ -10088,10 +10097,10 @@ var author$project$Main$update = F2(
 											author$project$Main$resetUrl(model),
 											model);
 									default:
-										break _n4$4;
+										break _n4$5;
 								}
 							} else {
-								break _n4$4;
+								break _n4$5;
 							}
 						}
 						return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, model);
@@ -10703,10 +10712,9 @@ var author$project$Editor$View$slotButton = F2(
 					elm$html$Html$text(slot)
 				]));
 	});
-var elm$html$Html$span = _VirtualDom_node('span');
-var author$project$Misc$when = F2(
-	function (cond, html) {
-		return cond ? html : A2(elm$html$Html$span, _List_Nil, _List_Nil);
+var author$project$Misc$appendIf = F3(
+	function (cond, items, list) {
+		return cond ? _Utils_ap(list, items) : list;
 	});
 var elm$html$Html$h2 = _VirtualDom_node('h2');
 var author$project$Editor$View$view = function (model) {
@@ -10716,61 +10724,69 @@ var author$project$Editor$View$view = function (model) {
 			[
 				A2(elm$html$Html$Attributes$style, 'font-family', 'monospace')
 			]),
-		_Utils_ap(
+		A3(
+			author$project$Misc$appendIf,
+			author$project$Editor$Utils$isLangStyled(model),
 			_List_fromArray(
 				[
-					A2(
-					elm$html$Html$h2,
-					_List_Nil,
-					_List_fromArray(
-						[
-							elm$html$Html$text('Combinatris in Elm')
-						])),
-					author$project$Editor$View$break,
-					author$project$Editor$View$horzDiv(
-					A2(
-						elm$core$List$map,
-						author$project$Editor$View$slotButton(model),
-						author$project$Editor$Data$slots)),
-					author$project$Editor$View$break,
-					A2(
-					elm$html$Html$map,
-					author$project$Editor$Types$LangArea,
-					author$project$Editor$CodeArea$view(model.langCode)),
-					author$project$Editor$View$break,
-					A2(
-					author$project$Misc$when,
-					author$project$Editor$Utils$isLangReady(model),
-					A2(
-						elm$html$Html$map,
-						author$project$Editor$Types$ExprArea,
-						author$project$Editor$CodeArea$view(model.exprCode))),
-					author$project$Editor$View$break,
-					author$project$Editor$View$errors(model),
-					author$project$Editor$View$break,
-					author$project$Editor$View$horzDiv(
-					_List_fromArray(
-						[
-							author$project$Editor$View$leftDiv(
-							_List_fromArray(
-								[
-									author$project$Editor$View$prependButton(model)
-								])),
-							author$project$Editor$View$rightDiv(
-							_List_fromArray(
-								[
-									author$project$Editor$View$reduceButton(model)
-								]))
-						])),
-					author$project$Editor$View$break
+					author$project$Editor$View$playButton(model)
 				]),
-			_List_fromArray(
-				[
-					A2(
-					author$project$Misc$when,
-					author$project$Editor$Utils$isLangStyled(model),
-					author$project$Editor$View$playButton(model))
-				])));
+			A3(
+				author$project$Misc$appendIf,
+				true,
+				_List_fromArray(
+					[
+						author$project$Editor$View$errors(model),
+						author$project$Editor$View$break,
+						author$project$Editor$View$horzDiv(
+						_List_fromArray(
+							[
+								author$project$Editor$View$leftDiv(
+								_List_fromArray(
+									[
+										author$project$Editor$View$prependButton(model)
+									])),
+								author$project$Editor$View$rightDiv(
+								_List_fromArray(
+									[
+										author$project$Editor$View$reduceButton(model)
+									]))
+							])),
+						author$project$Editor$View$break
+					]),
+				A3(
+					author$project$Misc$appendIf,
+					author$project$Editor$Utils$isLangReady(model),
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$map,
+							author$project$Editor$Types$ExprArea,
+							author$project$Editor$CodeArea$view(model.exprCode)),
+							author$project$Editor$View$break
+						]),
+					_List_fromArray(
+						[
+							A2(
+							elm$html$Html$h2,
+							_List_Nil,
+							_List_fromArray(
+								[
+									elm$html$Html$text('Combinatris in Elm')
+								])),
+							author$project$Editor$View$break,
+							author$project$Editor$View$horzDiv(
+							A2(
+								elm$core$List$map,
+								author$project$Editor$View$slotButton(model),
+								author$project$Editor$Data$slots)),
+							author$project$Editor$View$break,
+							A2(
+							elm$html$Html$map,
+							author$project$Editor$Types$LangArea,
+							author$project$Editor$CodeArea$view(model.langCode)),
+							author$project$Editor$View$break
+						])))));
 };
 var author$project$Game$View$break = A2(
 	elm$html$Html$div,

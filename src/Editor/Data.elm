@@ -9,6 +9,8 @@ Or select one of the well-known computational systems:
 
   [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).
 
+Or try playing [**this**](#GAME1) well-balanced example.
+
 Read more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).
 
 Annotating combinators with color and optional weight (see examples above) allows to play the [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html) game.
@@ -43,4 +45,15 @@ Yx   = x(Yx) -- #f00    %1
 
 S = B(BW)(BBC)
 I = SKK
+"""
+
+exampleGAME1 = String.trim """
+Bxyz = x(yz) -- #FF851B %3
+Cxyz = xzy   -- #B10DC9 %3
+Kxy  = x     -- #85144b %7
+Wxy  = xyy   -- #39CCCC %2
+Yx   = (Yx)x -- #f00    %2
+
+S = B(BW)(BBC)
+I = SKK      -- #00f    %2
 """

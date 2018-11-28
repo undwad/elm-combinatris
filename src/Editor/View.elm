@@ -87,14 +87,19 @@ playButton model = a [ href "#game" ] [ text "Play Combinatris" ]
 view : Model -> Html Msg
 view model =
   div [ style "font-family" "monospace" ] <|
-    [ h2 [] [ text "Combinatris in Elm" ], break
-    , horzDiv <| List.map (slotButton model) slots, break
-    , CodeArea.view model.langCode |> Html.map LangArea, break
-    , CodeArea.view model.exprCode |> Html.map ExprArea |> when (isLangReady model), break
-    , errors model, break
-    , horzDiv [ leftDiv [ prependButton model ], rightDiv [ reduceButton model ] ], break
-    ]
-    ++ [ playButton model |> when (isLangStyled model) ]
+    ( [ h2 [] [ text "Combinatris in Elm" ], break
+      , horzDiv <| List.map (slotButton model) slots, break
+      , CodeArea.view model.langCode |> Html.map LangArea, break
+      ]
+      |> appendIf (isLangReady model)
+        [ CodeArea.view model.exprCode |> Html.map ExprArea, break
+        ]
+      |> appendIf True
+        [ errors model, break
+        , horzDiv [ leftDiv [ prependButton model ], rightDiv [ reduceButton model ] ], break
+        ]
+      |> appendIf (isLangStyled model) [ playButton model ]
+    )
 
 display : String -> Html msg
 display = String.lines >> List.map text >> List.intersperse (br [] []) >> div []
