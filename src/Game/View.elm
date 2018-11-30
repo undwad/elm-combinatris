@@ -17,9 +17,6 @@ import Misc exposing (..)
 
 -- import Debug exposing (toString, log)
 
-calcFontSize : Model -> Attribute Msg
-calcFontSize model = style "font-size" <| "calc(100vw / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
-
 viewString : Theme -> String -> List (Html Msg)
 viewString theme = CodeArea.viewString theme >> (List.map <| Html.map <| always Idle)
 
@@ -55,7 +52,7 @@ showTable model =
   [
     table
     [ class "centered-table"
-    , calcFontSize model
+    , style "font-size" <| "calc(100vw / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
     , style "white-space" "pre"
     ]
     (Array.toList model.rows |> List.indexedMap (showRow model))
@@ -118,25 +115,30 @@ showControls =
 
 showInfo : Model -> Html Msg
 showInfo model =
-  div [ class "centered" ]
-  [
-    table
-    [ class "centered-table"
-    , calcFontSize model
-    , style "white-space" "pre"
-    ]
-    [ tr []
-      [ td [] [ coloredText "#bdc3c7" "Next: " ]
-      , td [] (Maybe.map .html model.next |> Maybe.withDefault [] |> padRight 12)
-      , td [] [ coloredText "#bdc3c7" "Score: " ]
-      , td [] [ coloredText "#3993d0" (fromInt model.score) ]
+  let
+      pad = model.width - 7
+  in
+    div [ class "centered" ]
+    [
+      table
+      [ class "centered-table"
+      , style "font-size" <| "calc(100wh / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
+      , style "white-space" "pre"
       ]
-    , tr []
-      [ td [] [ coloredText "#bdc3c7" "Rule: " ]
-      , td [] (Maybe.map .decl model.curr |> Maybe.withDefault [] |> padRight 12)
+      [ tr []
+        [ td [] [ coloredText "#bdc3c7" "Now:   " ]
+        , td [] (Maybe.map .info model.curr |> Maybe.withDefault [] |> padRight pad)
+        ]
+      , tr []
+        [ td [] [ coloredText "#bdc3c7" "Next:  " ]
+        , td [] (Maybe.map .info model.next |> Maybe.withDefault [] |> padRight pad)
+        ]
+      , tr []
+        [ td [] [ coloredText "#bdc3c7" "Score: " ]
+        , td [] [ coloredText "#3993d0" (fromInt model.score |> String.padRight pad ' ') ]
+        ]
       ]
     ]
-  ]
 
 break = div [ style "height" "10px" ] [ br [] [] ]
 

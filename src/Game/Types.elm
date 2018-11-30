@@ -10,19 +10,6 @@ import Lang.Types exposing (..)
 import Lang.Game exposing (Weights)
 import Editor.CodeArea as CodeArea
 
-config =
-  { width    = 30
-  , height   = 5
-  , interval = 700.0
-  }
-
-scoreFactor : Model -> Int
-scoreFactor model =
-  if      model.interval < 100 then 10
-  else if model.interval < 300 then 3
-  else if model.interval < 500 then 2
-                               else 1
-
 type alias Theme = CodeArea.Model
 
 type State = Playing | Paused | Finished
@@ -33,7 +20,7 @@ type alias Curr =
   , width : Int
   , x     : Int
   , y     : Int
-  , decl  : List (Html Msg)
+  , info  : List (Html Msg)
   }
 
 type alias Row =

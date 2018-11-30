@@ -31,24 +31,31 @@ import Misc exposing (..)
 
 -- import Debug exposing (toString, log)
 
+scoreFactor : Model -> Int
+scoreFactor model =
+  if      model.interval < 100 then 10
+  else if model.interval < 300 then 3
+  else if model.interval < 500 then 2
+                               else 1
+
 makeCurr : Model -> Term -> Curr
 makeCurr model term =
   let
     html = showTerm term |> viewString model.theme
-    decl =
+    info =
       case term of
         Comb _ comb   ->
           case Dict.get comb model.lang of
-            Just decl1 -> showDecl decl1 |> viewString model.theme
-            _         -> []
-        _             -> []
+            Just decl -> showDecl decl |> viewString model.theme
+            _         -> html
+        _             -> html
   in
     { term  = term
     , html  = html
     , width = List.length html
     , x     = 0
     , y     = floor (toFloat model.height / 2)
-    , decl  = decl
+    , info  = info
     }
 
 makeRow : Row
@@ -99,32 +106,37 @@ nextCurr = Random.weighted (0.0, Scope 0 [] 0) >> Random.generate Next
 
 init : Styles -> Weights -> Lang -> (Model, Cmd Msg)
 init styles weights lang =
-  { state    = Playing
-  , theme    =
-    { class       = "dummyarea"
-    , code        = ""
-    , scroll      = CodeArea.Scroll 0 0
-    , numlines    = False
-    , maxline     = 1
-    , highlight   = -1
-    , strong      = []
-    , styles      = styles
-    , opacity     = True
-    , placeholder = ""
+  let
+    width    = 30
+    height   = 5
+    interval = 700.0
+  in
+    { state    = Playing
+    , theme    =
+      { class       = "dummyarea"
+      , code        = ""
+      , scroll      = CodeArea.Scroll 0 0
+      , numlines    = False
+      , maxline     = 1
+      , highlight   = -1
+      , strong      = []
+      , styles      = styles
+      , opacity     = True
+      , placeholder = ""
+      }
+    , weights  = weights
+    , lang     = lang
+    , rows     = Array.repeat height makeRow
+    , curr     = Nothing
+    , next     = Nothing
+    , score    = 0
+    , width    = width
+    , height   = height
+    , interval = interval
+    , keys     = []
+    , arrows   = Arrows 0 0
     }
-  , weights  = weights
-  , lang     = lang
-  , rows     = Array.repeat config.height makeRow
-  , curr     = Nothing
-  , next     = Nothing
-  , score    = 0
-  , width    = config.width
-  , height   = config.height
-  , interval = config.interval
-  , keys     = []
-  , arrows   = Arrows 0 0
-  }
-  |> perform Cmd.none
+    |> perform Cmd.none
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
