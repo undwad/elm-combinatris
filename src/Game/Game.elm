@@ -28,6 +28,7 @@ import Editor.CodeArea as CodeArea
 import Game.Types exposing(..)
 import Game.View exposing (..)
 import Misc exposing (..)
+import Port exposing (..)
 
 -- import Debug exposing (toString, log)
 
@@ -214,5 +215,6 @@ subscribe model =
       Sub.batch
       [ Time.every model.interval Move
       , Sub.map KeyPress Keyboard.subscriptions
+      , touchStartCallback TouchStart
       ]
-    _ -> Sub.none
+    _ -> touchStartCallback TouchStart

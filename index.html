@@ -34,8 +34,9 @@
 
       document.addEventListener("touchstart", event =>
       {
-        [...event.targetTouches].map(i => app.ports.touchStartCallback.send(i.target.id));
+        const ids = [...event.targetTouches].map(i => i.target.id);
         if(preventDefaultTouchStart) event.preventDefault();
+        ids.forEach(id => app.ports.touchStartCallback.send(id));
       }, { passive: false });
 
     </script>

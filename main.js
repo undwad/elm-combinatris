@@ -5548,8 +5548,11 @@ var author$project$Game$Types$KeyPress = function (a) {
 var author$project$Game$Types$Move = function (a) {
 	return {$: 5, a: a};
 };
+var author$project$Game$Types$TouchStart = function (a) {
+	return {$: 10, a: a};
+};
+var author$project$Port$touchStartCallback = _Platform_incomingPort('touchStartCallback', elm$json$Json$Decode$string);
 var elm$core$Platform$Sub$map = _Platform_map;
-var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var elm$time$Time$Every = F2(
 	function (a, b) {
 		return {$: 0, a: a, b: b};
@@ -6375,10 +6378,11 @@ var author$project$Game$Game$subscribe = function (model) {
 			_List_fromArray(
 				[
 					A2(elm$time$Time$every, model.u, author$project$Game$Types$Move),
-					A2(elm$core$Platform$Sub$map, author$project$Game$Types$KeyPress, ohanhi$keyboard$Keyboard$subscriptions)
+					A2(elm$core$Platform$Sub$map, author$project$Game$Types$KeyPress, ohanhi$keyboard$Keyboard$subscriptions),
+					author$project$Port$touchStartCallback(author$project$Game$Types$TouchStart)
 				]));
 	} else {
-		return elm$core$Platform$Sub$none;
+		return author$project$Port$touchStartCallback(author$project$Game$Types$TouchStart);
 	}
 };
 var author$project$Main$GameMsg = function (a) {
