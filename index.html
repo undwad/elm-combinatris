@@ -25,17 +25,30 @@
     <script>
       const div = document.getElementById("elm");
       const app  = Elm.Main.init({ node: div });
+
       app.ports.writeCache.subscribe(([key, value]) => localStorage.setItem(key, value));
       app.ports.readCache.subscribe(([key, callback]) => app.ports[callback].send(localStorage.getItem(key) || ""));
-    </script>
-    <!-- <script>
-      var doubleTouchStartTimestamp = 0;
+
+      function test(touches)
+      {
+        for(const touch of touches)
+          console.log(touch.target, touch.target.innerText);
+      }
+
       document.addEventListener("touchstart", event =>
       {
-        const now = Date.now();
-        if (doubleTouchStartTimestamp + 500 > now) event.preventDefault();
-        doubleTouchStartTimestamp = now;
+        //event.preventDefault();
+        console.log("START", event);
+        test(event.targetTouches);
       });
-    </script> -->
+
+      document.addEventListener("touchend", event =>
+      {
+        //event.preventDefault();
+        console.log("END", event);
+        test(event.targetTouches);
+      });
+
+    </script>
 </body>
 </html>
