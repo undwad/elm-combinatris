@@ -17,6 +17,9 @@ import Misc exposing (..)
 
 -- import Debug exposing (toString, log)
 
+fontSize : Model -> String
+fontSize model = "calc(100vw / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
+
 viewString : Theme -> String -> List (Html Msg)
 viewString theme = CodeArea.viewString theme >> (List.map <| Html.map <| always Idle)
 
@@ -52,7 +55,7 @@ showTable model =
   [
     table
     [ class "centered-table"
-    , style "font-size" <| "calc(100vw / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
+    , style "font-size" (fontSize model)
     , style "white-space" "pre"
     ]
     (Array.toList model.rows |> List.indexedMap (showRow model))
@@ -122,7 +125,7 @@ showInfo model =
     [
       table
       [ class "centered-table"
-      , style "font-size" <| "calc(100wh / " ++ fromFloat (toFloat model.width * 1.1) ++ ")"
+      , style "font-size" (fontSize model)
       , style "white-space" "pre"
       ]
       [ tr []
