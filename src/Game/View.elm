@@ -81,6 +81,7 @@ showGameButton state =
     , style "bottom" "10px"
     , onClick msg
     , disableContextMenu Idle
+    , id txt
     ]
     [ text txt ]
 
@@ -93,6 +94,7 @@ showControlButton txt msg =
   , style "height" "1.5cm"
   , style "font-size" "1.0cm"
   , disableContextMenu Idle
+  , id txt
   ]
   [ text txt ]
 

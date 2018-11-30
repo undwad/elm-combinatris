@@ -33,6 +33,7 @@ import Game.Types as Game
 import Game.Game as Game
 import Game.View as Game
 import Misc exposing (..)
+import Port exposing (..)
 
 -- import Debug exposing (toString, log)
 
@@ -95,6 +96,7 @@ startGame ({ editor } as model) =
   |> withDefault Dict.empty
   |> Game.init editor.langCode.styles editor.termWeights
   |> mapGame model
+  |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, preventDefaultTouchStart True ])
 
 resetUrl : Model -> Cmd Msg
 resetUrl { navkey, navurl } =
@@ -124,7 +126,7 @@ update msg model =
         Just "game"          -> if Editor.isLangStyled model.editor then startGame model
                                                                     else model |> perform (resetUrl model)
         _                    -> model |> perform Cmd.none
-    (UrlChanged _, Game)     -> { model | scope = Editor } |> perform (resetUrl model)
+    (UrlChanged _, Game)     -> { model | scope = Editor } |> (perform << Cmd.batch) [ resetUrl model, preventDefaultTouchStart False ]
     (UrlRequest req, _) ->
       case req of
         Internal url         -> model |> perform (pushUrl model url)

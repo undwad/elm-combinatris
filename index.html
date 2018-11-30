@@ -29,25 +29,14 @@
       app.ports.writeCache.subscribe(([key, value]) => localStorage.setItem(key, value));
       app.ports.readCache.subscribe(([key, callback]) => app.ports[callback].send(localStorage.getItem(key) || ""));
 
-      function test(touches)
-      {
-        for(const touch of touches)
-          console.log(touch.target, touch.target.innerText);
-      }
+      let preventDefaultTouchStart = false;
+      app.ports.preventDefaultTouchStart.subscribe(value => preventDefaultTouchStart = value);
 
       document.addEventListener("touchstart", event =>
       {
-        //event.preventDefault();
-        console.log("START", event);
-        test(event.targetTouches);
-      });
-
-      document.addEventListener("touchend", event =>
-      {
-        //event.preventDefault();
-        console.log("END", event);
-        test(event.targetTouches);
-      });
+        [...event.targetTouches].map(i => app.ports.touchStartCallback.send(i.target.id));
+        if(preventDefaultTouchStart) event.preventDefault();
+      }, { passive: false });
 
     </script>
 </body>

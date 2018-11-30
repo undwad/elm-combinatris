@@ -5542,7 +5542,7 @@ var author$project$Editor$Editor$subscribe = function (model) {
 				A2(elm$core$Basics$composeL, author$project$Editor$Types$LangArea, author$project$Editor$CodeArea$SetText))
 			]));
 };
-var author$project$Game$Types$KeyMsg = function (a) {
+var author$project$Game$Types$KeyPress = function (a) {
 	return {$: 9, a: a};
 };
 var author$project$Game$Types$Move = function (a) {
@@ -6375,7 +6375,7 @@ var author$project$Game$Game$subscribe = function (model) {
 			_List_fromArray(
 				[
 					A2(elm$time$Time$every, model.u, author$project$Game$Types$Move),
-					A2(elm$core$Platform$Sub$map, author$project$Game$Types$KeyMsg, ohanhi$keyboard$Keyboard$subscriptions)
+					A2(elm$core$Platform$Sub$map, author$project$Game$Types$KeyPress, ohanhi$keyboard$Keyboard$subscriptions)
 				]));
 	} else {
 		return elm$core$Platform$Sub$none;
@@ -9145,10 +9145,12 @@ var author$project$Game$Game$reduceRow = F2(
 	});
 var author$project$Game$Types$Down = {$: 7};
 var author$project$Game$Types$Finished = 2;
+var author$project$Game$Types$Pause = {$: 2};
 var author$project$Game$Types$Paused = 1;
+var author$project$Game$Types$Resume = {$: 3};
+var author$project$Game$Types$Start = {$: 1};
 var author$project$Game$Types$Throw = {$: 8};
 var author$project$Game$Types$Up = {$: 6};
-var elm$browser$Browser$Navigation$load = _Browser_load;
 var elm$core$Array$bitMask = 4294967295 >>> (32 - elm$core$Array$shiftStep);
 var elm$core$Elm$JsArray$unsafeGet = _JsArray_unsafeGet;
 var elm$core$Array$getHelp = F3(
@@ -9701,6 +9703,25 @@ var ohanhi$keyboard$Keyboard$Arrows$arrows = function (keys) {
 };
 var author$project$Game$Game$update = F2(
 	function (msg, model) {
+		var touchstart = F2(
+			function (id, m1) {
+				switch (id) {
+					case 'Pause':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Pause, m1);
+					case 'Resume':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Resume, m1);
+					case 'Restart':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Start, m1);
+					case '⇧':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Up, m1);
+					case '⇩':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Down, m1);
+					case '⇨':
+						return A2(author$project$Game$Game$update, author$project$Game$Types$Throw, m1);
+					default:
+						return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, m1);
+				}
+			});
 		var sumScores = A2(
 			elm$core$Basics$composeL,
 			A2(
@@ -9867,13 +9888,11 @@ var author$project$Game$Game$update = F2(
 					elm$core$Platform$Cmd$none,
 					A2(move, model.l, model));
 			case 9:
-				var msg1 = msg.a;
-				return A2(keyboard, msg1, model);
+				var key = msg.a;
+				return A2(keyboard, key, model);
 			case 10:
-				return A2(
-					author$project$Misc$perform,
-					elm$browser$Browser$Navigation$load('#edit'),
-					model);
+				var id = msg.a;
+				return A2(touchstart, id, model);
 			default:
 				var model1 = A2(move, 1, model);
 				var model2 = _Utils_update(
@@ -9980,16 +9999,36 @@ var author$project$Main$setLangText = A2(
 		A2(elm$core$Basics$composeL, author$project$Misc$goto, author$project$Main$EditorMsg),
 		author$project$Editor$Types$LangArea),
 	author$project$Editor$CodeArea$SetText);
+var elm$json$Json$Encode$bool = _Json_wrap;
+var author$project$Port$preventDefaultTouchStart = _Platform_outgoingPort('preventDefaultTouchStart', elm$json$Json$Encode$bool);
+var elm$core$Tuple$mapSecond = F2(
+	function (func, _n0) {
+		var x = _n0.a;
+		var y = _n0.b;
+		return _Utils_Tuple2(
+			x,
+			func(y));
+	});
 var author$project$Main$startGame = function (model) {
 	var editor = model.y;
 	return A2(
-		author$project$Main$mapGame,
-		model,
-		A3(
-			author$project$Game$Game$init,
-			editor.B.ak,
-			editor.at,
-			A2(elm$core$Result$withDefault, elm$core$Dict$empty, editor.n)));
+		elm$core$Tuple$mapSecond,
+		function (cmd) {
+			return elm$core$Platform$Cmd$batch(
+				_List_fromArray(
+					[
+						cmd,
+						author$project$Port$preventDefaultTouchStart(true)
+					]));
+		},
+		A2(
+			author$project$Main$mapGame,
+			model,
+			A3(
+				author$project$Game$Game$init,
+				editor.B.ak,
+				editor.at,
+				A2(elm$core$Result$withDefault, elm$core$Dict$empty, editor.n))));
 };
 var author$project$Main$thenPerform = F2(
 	function (msg1, _n0) {
@@ -10001,6 +10040,7 @@ var author$project$Main$thenPerform = F2(
 				_List_fromArray(
 					[msg, msg1])));
 	});
+var elm$browser$Browser$Navigation$load = _Browser_load;
 var author$project$Main$update = F2(
 	function (msg, model) {
 		var _n0 = _Utils_Tuple2(msg, model.E);
@@ -10086,8 +10126,12 @@ var author$project$Main$update = F2(
 					} else {
 						var _n5 = _n0.b;
 						return A2(
-							author$project$Misc$perform,
-							author$project$Main$resetUrl(model),
+							A2(elm$core$Basics$composeL, author$project$Misc$perform, elm$core$Platform$Cmd$batch),
+							_List_fromArray(
+								[
+									author$project$Main$resetUrl(model),
+									author$project$Port$preventDefaultTouchStart(false)
+								]),
 							_Utils_update(
 								model,
 								{E: 0}));
@@ -10168,7 +10212,6 @@ var author$project$Editor$CodeArea$OnScroll = function (a) {
 	return {$: 1, a: a};
 };
 var elm$html$Html$textarea = _VirtualDom_node('textarea');
-var elm$json$Json$Encode$bool = _Json_wrap;
 var elm$html$Html$Attributes$boolProperty = F2(
 	function (key, bool) {
 		return A2(
@@ -10785,6 +10828,7 @@ var author$project$Game$View$horzDiv = elm$html$Html$div(
 			A2(elm$html$Html$Attributes$style, 'display', 'table'),
 			A2(elm$html$Html$Attributes$style, 'white-space', 'pre')
 		]));
+var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
 var author$project$Game$View$showControlButton = F2(
 	function (txt, msg) {
 		return A2(
@@ -10796,7 +10840,8 @@ var author$project$Game$View$showControlButton = F2(
 					A2(elm$html$Html$Attributes$style, 'width', '1.5cm'),
 					A2(elm$html$Html$Attributes$style, 'height', '1.5cm'),
 					A2(elm$html$Html$Attributes$style, 'font-size', '1.0cm'),
-					author$project$Misc$disableContextMenu(author$project$Game$Types$Idle)
+					author$project$Misc$disableContextMenu(author$project$Game$Types$Idle),
+					elm$html$Html$Attributes$id(txt)
 				]),
 			_List_fromArray(
 				[
@@ -10860,9 +10905,6 @@ var author$project$Game$View$showControls = A2(
 						]))
 				]))
 		]));
-var author$project$Game$Types$Pause = {$: 2};
-var author$project$Game$Types$Resume = {$: 3};
-var author$project$Game$Types$Start = {$: 1};
 var author$project$Game$View$showGameButton = function (state) {
 	var _n0 = function () {
 		switch (state) {
@@ -10887,7 +10929,8 @@ var author$project$Game$View$showGameButton = function (state) {
 				A2(elm$html$Html$Attributes$style, 'left', '10px'),
 				A2(elm$html$Html$Attributes$style, 'bottom', '10px'),
 				elm$html$Html$Events$onClick(msg),
-				author$project$Misc$disableContextMenu(author$project$Game$Types$Idle)
+				author$project$Misc$disableContextMenu(author$project$Game$Types$Idle),
+				elm$html$Html$Attributes$id(txt)
 			]),
 		_List_fromArray(
 			[

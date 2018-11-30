@@ -172,19 +172,28 @@ update msg model =
         else if arrows.y < 0 then update Down m2
         else if arrows.x > 0 then update Throw m2
         else                      m2 |> perform Cmd.none
+    touchstart id m1 =
+      case id of
+        "Pause"   -> m1 |> update Pause
+        "Resume"  -> m1 |> update Resume
+        "Restart" -> m1 |> update Start
+        "⇧"       -> m1 |> update Up
+        "⇩"       -> m1 |> update Down
+        "⇨"       -> m1 |> update Throw
+        _         -> m1 |> perform Cmd.none
   in
     case msg of
-      Idle        -> model |> perform Cmd.none
-      Start       -> init model.theme.styles model.weights model.lang
-      Pause       -> { model | state = Paused } |> perform Cmd.none
-      Resume      -> { model | state = Playing } |> perform Cmd.none
-      Next c      -> { model | curr = model.next, next = Just (makeCurr model c) } |> perform Cmd.none
-      Up          -> model |> control -1       |> perform Cmd.none
-      Down        -> model |> control  1       |> perform Cmd.none
-      Throw       -> model |> move model.width |> perform Cmd.none
-      KeyMsg msg1 -> model |> keyboard msg1
-      Return      -> model |> perform (Nav.load "#edit")
-      Move _      ->
+      Idle          -> model |> perform Cmd.none
+      Start         -> init model.theme.styles model.weights model.lang
+      Pause         -> { model | state = Paused } |> perform Cmd.none
+      Resume        -> { model | state = Playing } |> perform Cmd.none
+      Next c        -> { model | curr = model.next, next = Just (makeCurr model c) } |> perform Cmd.none
+      Up            -> model |> control -1       |> perform Cmd.none
+      Down          -> model |> control  1       |> perform Cmd.none
+      Throw         -> model |> move model.width |> perform Cmd.none
+      KeyPress key  -> model |> keyboard key
+      TouchStart id -> model |> touchstart id
+      Move _        ->
         let
           model1 = move 1 model
           model2 =
@@ -204,6 +213,6 @@ subscribe model =
     Playing ->
       Sub.batch
       [ Time.every model.interval Move
-      , Sub.map KeyMsg Keyboard.subscriptions
+      , Sub.map KeyPress Keyboard.subscriptions
       ]
     _ -> Sub.none

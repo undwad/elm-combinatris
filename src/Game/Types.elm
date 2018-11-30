@@ -57,5 +57,5 @@ type Msg
   | Up
   | Down
   | Throw
-  | KeyMsg Keyboard.Msg
-  | Return
+  | KeyPress Keyboard.Msg
+  | TouchStart String
