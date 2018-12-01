@@ -34,10 +34,19 @@
 
       document.addEventListener("touchstart", event =>
       {
-        const ids = [...event.targetTouches].map(i => i.target.id);
-        if(preventDefaultTouchStart) event.preventDefault();
-        ids.forEach(id => app.ports.touchStartCallback.send(id));
+          Array.from(event.targetTouches)
+               .filter(i => i.target)
+               .map(i => i.target.id)
+               .forEach(id => app.ports.touchStartCallback.send(id));
+          if(preventDefaultTouchStart) event.preventDefault();
       }, { passive: false });
+
+      // console.log = (...args) =>
+      // {
+      //     const req = new XMLHttpRequest();
+      //     req.open("POST", "http://192.168.10.84:8888", true);
+      //     req.send(args.join(' '));
+      // };
 
     </script>
 </body>
