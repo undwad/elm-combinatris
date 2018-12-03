@@ -215,6 +215,6 @@ subscribe model =
       Sub.batch
       [ Time.every model.interval Move
       , Sub.map KeyPress Keyboard.subscriptions
-      , touchStartCallback TouchStart
+      , touchCallback TouchStart
       ]
-    _ -> touchStartCallback TouchStart
+    _ -> touchCallback TouchStart

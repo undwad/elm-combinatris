@@ -27,18 +27,37 @@
       const app  = Elm.Main.init({ node: div });
 
       app.ports.writeCache.subscribe(([key, value]) => localStorage.setItem(key, value));
+
       app.ports.readCache.subscribe(([key, callback]) => app.ports[callback].send(localStorage.getItem(key) || ""));
 
-      let preventDefaultTouchStart = false;
-      app.ports.preventDefaultTouchStart.subscribe(value => preventDefaultTouchStart = value);
+      let captureTouches = false;
+      let touchTimer = null;
+
+      app.ports.captureTouches.subscribe(value => captureTouches = value);
 
       document.addEventListener("touchstart", event =>
       {
-          Array.from(event.targetTouches)
-               .filter(i => i.target)
-               .map(i => i.target.id)
-               .forEach(id => app.ports.touchStartCallback.send(id));
-          if(preventDefaultTouchStart) event.preventDefault();
+        if(null != touchTimer) clearInterval(touchTimer);
+        touchTimer = null;
+        if(captureTouches)
+        {
+          event.preventDefault();
+          const ids = Array.from(event.targetTouches).map(i => i.target && i.target.id);
+          const callback = () => ids.forEach(id => app.ports.touchCallback.send(id));
+          callback();
+          setTimeout(() =>
+          {
+            if(null === touchTimer)
+              touchTimer = setInterval(callback, 100);
+          }, 300);
+        }
+      }, { passive: false });
+
+      document.addEventListener("touchend", event =>
+      {
+        if(null != touchTimer) clearInterval(touchTimer);
+        touchTimer = undefined;
+        if(captureTouches) event.preventDefault();
       }, { passive: false });
 
       // console.log = (...args) =>

@@ -96,7 +96,7 @@ startGame ({ editor } as model) =
   |> withDefault Dict.empty
   |> Game.init editor.langCode.styles editor.termWeights
   |> mapGame model
-  |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, preventDefaultTouchStart True ])
+  |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, captureTouches True ])
 
 resetUrl : Model -> Cmd Msg
 resetUrl { navkey, navurl } =
@@ -126,7 +126,7 @@ update msg model =
         Just "game"          -> if Editor.isLangStyled model.editor then startGame model
                                                                     else model |> perform (resetUrl model)
         _                    -> model |> perform Cmd.none
-    (UrlChanged _, Game)     -> { model | scope = Editor } |> (perform << Cmd.batch) [ resetUrl model, preventDefaultTouchStart False ]
+    (UrlChanged _, Game)     -> { model | scope = Editor } |> (perform << Cmd.batch) [ resetUrl model, captureTouches False ]
     (UrlRequest req, _) ->
       case req of
         Internal url         -> model |> perform (pushUrl model url)

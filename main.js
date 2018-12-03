@@ -5551,7 +5551,7 @@ var author$project$Game$Types$Move = function (a) {
 var author$project$Game$Types$TouchStart = function (a) {
 	return {$: 10, a: a};
 };
-var author$project$Port$touchStartCallback = _Platform_incomingPort('touchStartCallback', elm$json$Json$Decode$string);
+var author$project$Port$touchCallback = _Platform_incomingPort('touchCallback', elm$json$Json$Decode$string);
 var elm$core$Platform$Sub$map = _Platform_map;
 var elm$time$Time$Every = F2(
 	function (a, b) {
@@ -6379,10 +6379,10 @@ var author$project$Game$Game$subscribe = function (model) {
 				[
 					A2(elm$time$Time$every, model.u, author$project$Game$Types$Move),
 					A2(elm$core$Platform$Sub$map, author$project$Game$Types$KeyPress, ohanhi$keyboard$Keyboard$subscriptions),
-					author$project$Port$touchStartCallback(author$project$Game$Types$TouchStart)
+					author$project$Port$touchCallback(author$project$Game$Types$TouchStart)
 				]));
 	} else {
-		return author$project$Port$touchStartCallback(author$project$Game$Types$TouchStart);
+		return author$project$Port$touchCallback(author$project$Game$Types$TouchStart);
 	}
 };
 var author$project$Main$GameMsg = function (a) {
@@ -10004,7 +10004,7 @@ var author$project$Main$setLangText = A2(
 		author$project$Editor$Types$LangArea),
 	author$project$Editor$CodeArea$SetText);
 var elm$json$Json$Encode$bool = _Json_wrap;
-var author$project$Port$preventDefaultTouchStart = _Platform_outgoingPort('preventDefaultTouchStart', elm$json$Json$Encode$bool);
+var author$project$Port$captureTouches = _Platform_outgoingPort('captureTouches', elm$json$Json$Encode$bool);
 var elm$core$Tuple$mapSecond = F2(
 	function (func, _n0) {
 		var x = _n0.a;
@@ -10022,7 +10022,7 @@ var author$project$Main$startGame = function (model) {
 				_List_fromArray(
 					[
 						cmd,
-						author$project$Port$preventDefaultTouchStart(true)
+						author$project$Port$captureTouches(true)
 					]));
 		},
 		A2(
@@ -10134,7 +10134,7 @@ var author$project$Main$update = F2(
 							_List_fromArray(
 								[
 									author$project$Main$resetUrl(model),
-									author$project$Port$preventDefaultTouchStart(false)
+									author$project$Port$captureTouches(false)
 								]),
 							_Utils_update(
 								model,
