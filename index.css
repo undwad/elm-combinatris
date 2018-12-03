@@ -111,13 +111,3 @@ pre.codearea {
         -ms-user-select: none;
             user-select: none;
 }
-@media all and (orientation:portrait) {
-  .hint {
-    visibility: visible;
-  }
-}
-@media all and (orientation:landscape) {
-  .hint {
-    visibility: hidden;
-  }
-}

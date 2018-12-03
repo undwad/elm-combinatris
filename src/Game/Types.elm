@@ -14,6 +14,8 @@ type alias Theme = CodeArea.Model
 
 type State = Playing | Paused | Finished
 
+type Orientation = Portrait | Landscape
+
 type alias Curr =
   { term  : Term
   , html  : List (Html Msg)
@@ -45,6 +47,7 @@ type alias Model =
   , interval : Float
   , keys     : List Key
   , arrows   : Arrows
+  , orient   : Orientation
   }
 
 type Msg
@@ -59,3 +62,4 @@ type Msg
   | Throw
   | KeyPress Keyboard.Msg
   | TouchStart String
+  | Orient Orientation

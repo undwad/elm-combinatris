@@ -1,6 +1,8 @@
 module Game.Game exposing (init, update, subscribe)
 
-import Browser.Events
+import Browser.Events as Events
+import Browser.Dom as Dom
+import Browser.Navigation as Nav
 import Html
 import List
 import Array exposing (Array)
@@ -14,10 +16,8 @@ import Maybe exposing (Maybe, withDefault)
 import Time exposing (Posix)
 import Json.Decode as Decode
 import Dict exposing (Dict)
-import Browser.Dom exposing (Viewport)
 import Keyboard exposing (Key)
 import Keyboard.Arrows as Arrows exposing (Arrows)
-import Browser.Navigation as Nav
 
 import Lang.Types exposing (..)
 import Lang.Lang exposing (..)
@@ -105,12 +105,16 @@ reduceRow model row =
 nextCurr : Weights -> Cmd Msg
 nextCurr = Random.weighted (0.0, Scope 0 [] 0) >> Random.generate Next
 
+doOrient : number -> number -> Msg
+doOrient w h = Orient (if w >= h then Landscape else Portrait)
+
 init : Styles -> Weights -> Lang -> (Model, Cmd Msg)
 init styles weights lang =
   let
     width    = 30
     height   = 5
     interval = 700.0
+    doOrient1 { scene } = doOrient scene.width scene.height
   in
     { state    = Playing
     , theme    =
@@ -136,8 +140,13 @@ init styles weights lang =
     , interval = interval
     , keys     = []
     , arrows   = Arrows 0 0
+    , orient   = Landscape
     }
-    |> (perform << Cmd.batch) [ captureTouches True, resetViewport Idle]
+    |> (perform << Cmd.batch)
+        [ captureTouches True
+        , resetViewport Idle
+        , Task.perform doOrient1 Dom.getViewport
+        ]
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -185,6 +194,7 @@ update msg model =
   in
     case msg of
       Idle          -> model |> perform Cmd.none
+      Orient orient -> { model | orient = orient } |> perform Cmd.none
       Start         -> init model.theme.styles model.weights model.lang
       Pause         -> { model | state = Paused } |> perform (captureTouches False)
       Resume        -> { model | state = Playing } |> perform (captureTouches True)
@@ -210,11 +220,10 @@ update msg model =
 
 subscribe : Model -> Sub Msg
 subscribe model =
-  case model.state of
-    Playing ->
-      Sub.batch
-      [ Time.every model.interval Move
-      , Sub.map KeyPress Keyboard.subscriptions
-      , touchCallback TouchStart
-      ]
-    _ -> touchCallback TouchStart
+  [ Events.onResize doOrient ]
+  |> appendIf (Playing == model.state)
+    [ Time.every model.interval Move
+    , Sub.map KeyPress Keyboard.subscriptions
+    , touchCallback TouchStart
+    ]
+  |> Sub.batch
