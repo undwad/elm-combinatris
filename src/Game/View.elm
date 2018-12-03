@@ -98,8 +98,8 @@ showControlButton txt msg =
   ]
   [ text txt ]
 
-showControls : Html Msg
-showControls =
+showControls : Model -> Html Msg
+showControls model =
   table
   [ style "display" "block"
   , style "margin" "0 auto 0"
@@ -142,6 +142,10 @@ showInfo model =
         [ td [] [ coloredText "#bdc3c7" "Score: " ]
         , td [] [ coloredText "#3993d0" (fromInt model.score |> String.padRight pad ' ') ]
         ]
+      , tr [ class "hint" ]
+        [ td [] [ coloredText "#bdc3c7" "Hint: " ]
+        , td [] [ coloredText "#85144b" ("Try landscape mode!" |> String.padRight pad ' ') ]
+        ]
       ]
     ]
 
@@ -167,7 +171,7 @@ view model =
     , horzDiv [ showTable model ], break
     , horzDiv [ showInfo model ], break
     , showGameButton model.state
-    , if Playing == model.state then showControls else div [] []
+    , if Playing == model.state then showControls model else div [] []
     , CodeArea.view model.theme |> Html.map (always Idle)
     ]
 

@@ -96,7 +96,6 @@ startGame ({ editor } as model) =
   |> withDefault Dict.empty
   |> Game.init editor.langCode.styles editor.termWeights
   |> mapGame model
-  |> Tuple.mapSecond (\cmd -> Cmd.batch [ cmd, captureTouches True ])
 
 resetUrl : Model -> Cmd Msg
 resetUrl { navkey, navurl } =

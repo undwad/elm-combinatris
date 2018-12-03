@@ -7,6 +7,7 @@ import Html.Events
 import Url exposing (Url)
 import Browser exposing (UrlRequest(..))
 import Browser.Navigation as Nav
+import Browser.Dom as Dom
 import Json.Decode
 
 goto : a -> Cmd a
@@ -54,3 +55,6 @@ disableContextMenu msg =
        }
      )
   |> Html.Events.custom "contextmenu"
+
+resetViewport : msg -> Cmd msg
+resetViewport msg = Task.perform (always msg) (Dom.setViewport 0 0)

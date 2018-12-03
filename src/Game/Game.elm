@@ -137,7 +137,7 @@ init styles weights lang =
     , keys     = []
     , arrows   = Arrows 0 0
     }
-    |> perform Cmd.none
+    |> (perform << Cmd.batch) [ captureTouches True, resetViewport Idle]
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -186,8 +186,8 @@ update msg model =
     case msg of
       Idle          -> model |> perform Cmd.none
       Start         -> init model.theme.styles model.weights model.lang
-      Pause         -> { model | state = Paused } |> perform Cmd.none
-      Resume        -> { model | state = Playing } |> perform Cmd.none
+      Pause         -> { model | state = Paused } |> perform (captureTouches False)
+      Resume        -> { model | state = Playing } |> perform (captureTouches True)
       Next c        -> { model | curr = model.next, next = Just (makeCurr model c) } |> perform Cmd.none
       Up            -> model |> control -1       |> perform Cmd.none
       Down          -> model |> control  1       |> perform Cmd.none
