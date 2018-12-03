@@ -9975,7 +9975,10 @@ var author$project$Game$Game$update = F2(
 						author$project$Game$Game$nextCurr(model.av),
 						model2);
 				} else {
-					return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, model2);
+					return A2(
+						author$project$Misc$perform,
+						author$project$Port$captureTouches(false),
+						model2);
 				}
 		}
 	});
