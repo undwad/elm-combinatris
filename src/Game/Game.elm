@@ -215,8 +215,9 @@ update msg model =
             }
         in
           case (model2.curr, model2.state) of
-            (Nothing, Playing) -> model2 |> perform (nextCurr model.weights)
-            _                  -> model2 |> perform (captureTouches False)
+            (Nothing, Playing ) -> model2 |> perform (nextCurr model.weights)
+            (_,       Finished) -> model2 |> perform (captureTouches False)
+            _                   -> model2 |> perform Cmd.none
 
 subscribe : Model -> Sub Msg
 subscribe model =

@@ -9849,11 +9849,11 @@ var author$project$Game$Game$update = F2(
 			});
 		var control = F2(
 			function (dy, m) {
-				var _n6 = m.s;
-				if (!_n6.$) {
-					var curr = _n6.a;
-					var _n7 = A3(canMove, curr.P + curr.i, curr.x + dy, m.m);
-					if (_n7) {
+				var _n7 = m.s;
+				if (!_n7.$) {
+					var curr = _n7.a;
+					var _n8 = A3(canMove, curr.P + curr.i, curr.x + dy, m.m);
+					if (_n8) {
 						return _Utils_update(
 							m,
 							{
@@ -9869,11 +9869,11 @@ var author$project$Game$Game$update = F2(
 			});
 		var move = F2(
 			function (dx, m) {
-				var _n4 = m.s;
-				if (!_n4.$) {
-					var curr = _n4.a;
-					var _n5 = A3(canMove, (curr.P + dx) + curr.i, curr.x, m.m);
-					if (_n5) {
+				var _n5 = m.s;
+				if (!_n5.$) {
+					var curr = _n5.a;
+					var _n6 = A3(canMove, (curr.P + dx) + curr.i, curr.x, m.m);
+					if (_n6) {
 						return _Utils_update(
 							m,
 							{
@@ -9967,19 +9967,31 @@ var author$project$Game$Game$update = F2(
 						N: canPlay(model1.m) ? 0 : 2
 					});
 				var _n1 = _Utils_Tuple2(model2.s, model2.N);
-				if ((_n1.a.$ === 1) && (!_n1.b)) {
-					var _n2 = _n1.a;
-					var _n3 = _n1.b;
-					return A2(
-						author$project$Misc$perform,
-						author$project$Game$Game$nextCurr(model.av),
-						model2);
-				} else {
-					return A2(
-						author$project$Misc$perform,
-						author$project$Port$captureTouches(false),
-						model2);
+				_n1$2:
+				while (true) {
+					switch (_n1.b) {
+						case 0:
+							if (_n1.a.$ === 1) {
+								var _n2 = _n1.a;
+								var _n3 = _n1.b;
+								return A2(
+									author$project$Misc$perform,
+									author$project$Game$Game$nextCurr(model.av),
+									model2);
+							} else {
+								break _n1$2;
+							}
+						case 2:
+							var _n4 = _n1.b;
+							return A2(
+								author$project$Misc$perform,
+								author$project$Port$captureTouches(false),
+								model2);
+						default:
+							break _n1$2;
+					}
 				}
+				return A2(author$project$Misc$perform, elm$core$Platform$Cmd$none, model2);
 		}
 	});
 var author$project$Main$Game = 1;
