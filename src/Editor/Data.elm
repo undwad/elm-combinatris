@@ -9,7 +9,7 @@ Or select one of the well-known computational systems:
 
   [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).
 
-Or try playing [**this**](#GAME1) well-balanced example.
+Or try playing [**this**](#BINARYLOGIC1) binary logic example.
 
 Read more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).
 
@@ -47,13 +47,12 @@ S = B(BW)(BBC)
 I = SKK
 """
 
-exampleGAME1 = String.trim """
-Bxyz = x(yz) -- #FF851B %3
-Cxyz = xzy   -- #B10DC9 %3
-Kxy  = x     -- #85144b %7
-Wxy  = xyy   -- #39CCCC %2
-Yx   = (Yx)x -- #f00    %2
-
-S = B(BW)(BBC)
-I = SKK      -- #00f    %2
+exampleBINARYLOGIC1 = String.trim """
+​Txy = x      -- true  #006E51 %3
+Fxy = y      -- false #B10DC9 %3
+Nx  = xFT    -- not   #00f    %2
+Axy = xyx    -- and   #CE3175 %2
+Oxy = xxy    -- or    #FE840E %2
+Xxy = xy(Ny) -- xor   #DD4132 %2
+Yx  = x(Yx)  -- rec   #f00    %2
 """

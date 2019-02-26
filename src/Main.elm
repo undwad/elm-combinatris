@@ -24,7 +24,7 @@ import Lang.Lang exposing (..)
 import Lang.Game exposing (..)
 import Lang.Show exposing (..)
 import Editor.CodeArea as CodeArea
-import Editor.Data exposing (exampleGAME1, exampleSKIY, exampleBCKWY)
+import Editor.Data exposing (exampleBINARYLOGIC1, exampleSKIY, exampleBCKWY)
 import Editor.Types as Editor
 import Editor.Editor as Editor
 import Editor.View as Editor
@@ -118,10 +118,10 @@ update msg model =
     (GameMsg   msg1, Game)   -> Game.update   msg1 model.game   |> mapGame model
     (UrlChanged url, Editor) ->
       case url.fragment of
-        Just "GAME1"         -> model |> perform (setLangText exampleGAME1)  |> thenPerform (resetUrl model)
-        Just "SKIY"          -> model |> perform (setLangText exampleSKIY)  |> thenPerform (resetUrl model)
-        Just "BCKWY"         -> model |> perform (setLangText exampleBCKWY) |> thenPerform (resetUrl model)
-        Just "NEW"           -> model |> perform (setLangText "\u{200B}")   |> thenPerform (resetUrl model)
+        Just "BINARYLOGIC1"  -> model |> perform (setLangText exampleBINARYLOGIC1) |> thenPerform (resetUrl model)
+        Just "SKIY"          -> model |> perform (setLangText exampleSKIY)         |> thenPerform (resetUrl model)
+        Just "BCKWY"         -> model |> perform (setLangText exampleBCKWY)        |> thenPerform (resetUrl model)
+        Just "NEW"           -> model |> perform (setLangText "\u{200B}")          |> thenPerform (resetUrl model)
         Just "game"          -> if Editor.isLangStyled model.editor then startGame model
                                                                     else model |> perform (resetUrl model)
         _                    -> model |> perform Cmd.none

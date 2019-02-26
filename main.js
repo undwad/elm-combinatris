@@ -5007,7 +5007,7 @@ var author$project$Editor$CodeArea$init = function (_n0) {
 		ak: author$project$Editor$CodeArea$defaultStyles
 	};
 };
-var author$project$Editor$Data$placeholder = '\r\n[**Start composing**](#NEW) your own set of combinators.\r\n\r\nOr select one of the well-known computational systems:\r\n\r\n  [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).\r\n\r\nOr try playing [**this**](#GAME1) well-balanced example.\r\n\r\nRead more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).\r\n\r\nAnnotating combinators with color and optional weight (see examples above) allows to play the [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html) game.\r\n\r\nUnlike the original game, expressions don\'t reduce completely at once, but step by step, so that you could stop infinite loops.\r\nScoring also is slightly different but intuitive.\r\n\r\nUse arrow keys or screen buttons to play the game.\r\n\r\nThe project is coded in [**Elm**](http://elm-lang.org/) language.\r\n\r\nThe project is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).\r\n';
+var author$project$Editor$Data$placeholder = '\r\n[**Start composing**](#NEW) your own set of combinators.\r\n\r\nOr select one of the well-known computational systems:\r\n\r\n  [**SKIY**](#SKIY) or [**BCKWY**](#BCKWY).\r\n\r\nOr try playing [**this**](#BINARYLOGIC1) binary logic example.\r\n\r\nRead more about combinatory logic in [**Wikipedia**](https://en.wikipedia.org/wiki/Combinatory_logic).\r\n\r\nAnnotating combinators with color and optional weight (see examples above) allows to play the [**Combinatris**](http://dirk.rave.org/combinatris/how-to-play.html) game.\r\n\r\nUnlike the original game, expressions don\'t reduce completely at once, but step by step, so that you could stop infinite loops.\r\nScoring also is slightly different but intuitive.\r\n\r\nUse arrow keys or screen buttons to play the game.\r\n\r\nThe project is coded in [**Elm**](http://elm-lang.org/) language.\r\n\r\nThe project is open source on [**GitHub**](https://github.com/undwad/elm-combinatris).\r\n';
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -6463,7 +6463,7 @@ var author$project$Main$subscribe = function (_n0) {
 };
 var elm$core$String$trim = _String_trim;
 var author$project$Editor$Data$exampleBCKWY = elm$core$String$trim('\r\nBxyz = x(yz) -- #FF851B %1\r\nCxyz = xzy   -- #B10DC9 %1\r\nKxy  = x     -- #85144b %3\r\nWxy  = xyy   -- #39CCCC %1\r\nYx   = x(Yx) -- #f00    %1\r\n\r\nS = B(BW)(BBC)\r\nI = SKK\r\n');
-var author$project$Editor$Data$exampleGAME1 = elm$core$String$trim('\r\nBxyz = x(yz) -- #FF851B %3\r\nCxyz = xzy   -- #B10DC9 %3\r\nKxy  = x     -- #85144b %7\r\nWxy  = xyy   -- #39CCCC %2\r\nYx   = (Yx)x -- #f00    %2\r\n\r\nS = B(BW)(BBC)\r\nI = SKK      -- #00f    %2\r\n');
+var author$project$Editor$Data$exampleBINARYLOGIC1 = elm$core$String$trim('\r\n​Txy = x      -- true  #006E51 %3\r\nFxy = y      -- false #B10DC9 %3\r\nNx  = xFT    -- not   #00f    %2\r\nAxy = xyx    -- and   #CE3175 %2\r\nOxy = xxy    -- or    #FE840E %2\r\nXxy = xy(Ny) -- xor   #DD4132 %2\r\nYx  = x(Yx)  -- rec   #f00    %2\r\n');
 var author$project$Editor$Data$exampleSKIY = elm$core$String$trim('\r\nIx   = x      -- #0074D9 %3\r\nKxy  = x      -- #85144b %2\r\nSxyz = xz(yz) -- #3D9970 %2\r\nYx   = x(Yx)  -- #f00    %2\r\n\r\nB = S(KS)K\r\nC = S(BBS)(KK)\r\nW = SS(SK)\r\n');
 var elm$core$Basics$composeR = F3(
 	function (f, g, x) {
@@ -10137,13 +10137,13 @@ var author$project$Main$update = F2(
 						while (true) {
 							if (!_n4.$) {
 								switch (_n4.a) {
-									case 'GAME1':
+									case 'BINARYLOGIC1':
 										return A2(
 											author$project$Main$thenPerform,
 											author$project$Main$resetUrl(model),
 											A2(
 												author$project$Misc$perform,
-												author$project$Main$setLangText(author$project$Editor$Data$exampleGAME1),
+												author$project$Main$setLangText(author$project$Editor$Data$exampleBINARYLOGIC1),
 												model));
 									case 'SKIY':
 										return A2(
